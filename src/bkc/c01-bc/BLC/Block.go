@@ -48,3 +48,7 @@ func(b *Block) SetHash(){//用指针不需要返回值，要不然太多余
 	b.Hash=hash[:]//赋值切片所有内容
 }
 
+//生成创世区块
+func CreateGenesisBlock(data []byte) *Block{
+	return NewBlock(1,nil,data)
+}
