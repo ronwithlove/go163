@@ -50,5 +50,5 @@ func(b *Block) SetHash(){//用指针不需要返回值，要不然太多余
 
 //生成创世区块
 func CreateGenesisBlock(data []byte) *Block{
-	return NewBlock(1,nil,data)
+	return NewBlock(1,nil,data)//区块高度从1开始
 }

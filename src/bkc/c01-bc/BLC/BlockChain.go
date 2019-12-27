@@ -8,7 +8,7 @@ type BlockChain struct{//直接用切片也可以，但是结构体比较正式�
 //初始化区块链
 func CreateBlockCHainWithGenesisBlock() *BlockChain{
 	block:=CreateGenesisBlock([]byte("init blockchain"))
-	return &BlockChain{[]*Block{block}}//把第一个区块添加到区块链中去了
+	return &BlockChain{[]*Block{block}}//把第一个区块添加到区块链中去了,初始化区块链
 }
 
 

@@ -11,9 +11,9 @@ func main(){
 	fmt.Printf("blockCHain:%v\n",bc.Blocks[0])
 
 	//上链
-	bc.AddBlock(bc.Blocks[len(bc.Blocks)-1].Heigth+1,
-		bc.Blocks[len(bc.Blocks)-1].Hash,
-		[]byte("ron sent 10 tc to aaron"))//长度和索引差1
+	bc.AddBlock(bc.Blocks[len(bc.Blocks)-1].Heigth+1,//长度和索引差1
+		bc.Blocks[len(bc.Blocks)-1].Hash,//上一个区块的哈希
+		[]byte("ron sent 10 tc to aaron"))//当前的data
 	bc.AddBlock(bc.Blocks[len(bc.Blocks)-1].Heigth+1,
 		bc.Blocks[len(bc.Blocks)-1].Hash,
 		[]byte("jacky sent 10 tc to aaron"))//长度和索引差1
