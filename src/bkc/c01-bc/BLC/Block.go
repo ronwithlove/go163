@@ -15,6 +15,7 @@ type Block struct{
 	PrevBlockHash 	[]byte	//前区块哈希
 	Heigth			int64	//区块高度
 	Data			[]byte	//交易数据
+	Nonce			int64	//在运行pow时生成的哈希变化值，也代表pow运行的动态修改的数据
 }
 
 //新建区块
@@ -29,7 +30,14 @@ func NewBlock(height int64, prevBlockHash []byte, data []byte) *Block{
 		Data:data,
 	}
 	//生成哈希
-	block.SetHash()
+	block.SetHash()//这行应该废弃没用了
+	//替换掉setHash
+	//通过POW 生成新的哈希值
+	pow:= NewProofOfWork(&block)
+	//执行工作量证明算法
+	hash,nonce:=pow.Run()
+	block.Hash=hash
+	block.Nonce=int64(nonce)
 	return &block
 }
 
