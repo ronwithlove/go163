@@ -2,15 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="41dd9106-37c3-4b6a-98af-dcbaf8b5cb53" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/ProofOfWork.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/bkc/boltdb.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/go_build_main_go.exe" beforeDir="false" afterPath="$PROJECT_DIR$/bin/go_build_main_go.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/Block.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/Block.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/BlockChain.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/BlockChain.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bkc/c01-bc/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/bkc/c01-bc/main.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="163project" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -74,6 +80,15 @@
       <output_directory value="$PROJECT_DIR$/bin" />
       <method v="2" />
     </configuration>
+    <configuration name="go build boltdb.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="163project" />
+      <working_directory value="$PROJECT_DIR$/src/bkc/c01-bc" />
+      <kind value="FILE" />
+      <filePath value="$PROJECT_DIR$/src/bkc/boltdb.go" />
+      <directory value="$PROJECT_DIR$/" />
+      <output_directory value="$PROJECT_DIR$/bin" />
+      <method v="2" />
+    </configuration>
     <configuration name="go build channel.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="163project" />
       <working_directory value="$PROJECT_DIR$/src/bkc/c01-bc" />
@@ -95,6 +110,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="Go Build.go build main.go" />
+        <item itemvalue="Go Build.go build boltdb.go" />
         <item itemvalue="Go Build.go build Block.go" />
         <item itemvalue="Go Build.go build channel.go" />
       </list>
@@ -120,6 +136,10 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="1209" y="441" width="1089" height="681" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.2560.1400@0.0.2560.1400" timestamp="1577401098704" />
+    <state x="1417" y="607" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1577562142603">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="1417" y="607" key="#com.intellij.fileTypes.FileTypeChooser/0.0.2560.1400@0.0.2560.1400" timestamp="1577562142603" />
     <state x="1496" y="473" key="#go_build_163project" timestamp="1577400285939">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
@@ -136,22 +156,22 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="1560" y="486" key="FileChooserDialogImpl/0.0.2560.1400@0.0.2560.1400" timestamp="1577472859268" />
-    <state width="1506" height="406" key="GridCell.Tab.0.bottom" timestamp="1577517462241">
+    <state width="1660" height="194" key="GridCell.Tab.0.bottom" timestamp="1577572022906">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="1506" height="406" key="GridCell.Tab.0.bottom/0.0.2560.1400@0.0.2560.1400" timestamp="1577517462241" />
-    <state width="1506" height="406" key="GridCell.Tab.0.center" timestamp="1577517462240">
+    <state width="1660" height="194" key="GridCell.Tab.0.bottom/0.0.2560.1400@0.0.2560.1400" timestamp="1577572022906" />
+    <state width="1660" height="194" key="GridCell.Tab.0.center" timestamp="1577572022905">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="1506" height="406" key="GridCell.Tab.0.center/0.0.2560.1400@0.0.2560.1400" timestamp="1577517462240" />
-    <state width="1506" height="406" key="GridCell.Tab.0.left" timestamp="1577517462240">
+    <state width="1660" height="194" key="GridCell.Tab.0.center/0.0.2560.1400@0.0.2560.1400" timestamp="1577572022905" />
+    <state width="1660" height="194" key="GridCell.Tab.0.left" timestamp="1577572022905">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="1506" height="406" key="GridCell.Tab.0.left/0.0.2560.1400@0.0.2560.1400" timestamp="1577517462240" />
-    <state width="1506" height="406" key="GridCell.Tab.0.right" timestamp="1577517462241">
+    <state width="1660" height="194" key="GridCell.Tab.0.left/0.0.2560.1400@0.0.2560.1400" timestamp="1577572022905" />
+    <state width="1660" height="194" key="GridCell.Tab.0.right" timestamp="1577572022906">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="1506" height="406" key="GridCell.Tab.0.right/0.0.2560.1400@0.0.2560.1400" timestamp="1577517462241" />
+    <state width="1660" height="194" key="GridCell.Tab.0.right/0.0.2560.1400@0.0.2560.1400" timestamp="1577572022906" />
     <state x="1283" y="374" key="SettingsEditor" timestamp="1577400907646">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>

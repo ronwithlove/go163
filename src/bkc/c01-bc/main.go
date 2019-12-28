@@ -3,23 +3,25 @@ package main
 import (
 	"bkc/c01-bc/BLC"
 	"fmt"
+	"github.com/boltdb/bolt"
 )
 
 func main(){
 
 	bc:=BLC.CreateBlockCHainWithGenesisBlock()
-	fmt.Printf("blockCHain:%v\n",bc.Blocks[0])
-
+	defer bc.DB.Close()
 	//上链
-	bc.AddBlock(bc.Blocks[len(bc.Blocks)-1].Heigth+1,//长度和索引差1
-		bc.Blocks[len(bc.Blocks)-1].Hash,//上一个区块的哈希
-		[]byte("ron sent 10 tc to aaron"))//当前的data
-	bc.AddBlock(bc.Blocks[len(bc.Blocks)-1].Heigth+1,
-		bc.Blocks[len(bc.Blocks)-1].Hash,
-		[]byte("jacky sent 10 tc to aaron"))//长度和索引差1
+	bc.AddBlock([]byte("ron sent 10 tc to aaron"))
+	bc.AddBlock([]byte("jacky sent 10 tc to aaron"))
 
-		for _,block:=range bc.Blocks{
-			//fmt.Printf("block : %v\n",block)
-			fmt.Printf("上一个区块哈希：%x, 当前区块哈希: %x\n",block.PrevBlockHash,block.Hash)
-	}
+	bc.DB.View(func(tx *bolt.Tx) error {
+		b:=tx.Bucket([]byte("blocks"))
+		if nil!=b{
+			hash:=b.Get([]byte("1"))
+			fmt.Printf("value: %x\n",hash)
+		}
+		return nil
+	})
+
+
 }
