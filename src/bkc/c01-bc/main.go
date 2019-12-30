@@ -2,8 +2,6 @@ package main
 
 import (
 	"bkc/c01-bc/BLC"
-	"fmt"
-	"github.com/boltdb/bolt"
 )
 
 func main(){
@@ -14,15 +12,16 @@ func main(){
 	bc.AddBlock([]byte("ron sent 10 tc to aaron"))
 	bc.AddBlock([]byte("jacky sent 10 tc to aaron"))
 
+	bc.PrintChain()
 	//查看最新的哈希值
-	bc.DB.View(func(tx *bolt.Tx) error {
-		b:=tx.Bucket([]byte("blocks"))
-		if nil!=b{
-			hash:=b.Get([]byte("1"))
-			fmt.Printf("value: %x\n",hash)
-		}
-		return nil
-	})
+	//bc.DB.View(func(tx *bolt.Tx) error {
+	//	b:=tx.Bucket([]byte("blocks"))
+	//	if nil!=b{
+	//		hash:=b.Get([]byte("1"))
+	//		fmt.Printf("value: %x\n",hash)
+	//	}
+	//	return nil
+	//})
 
 
 }

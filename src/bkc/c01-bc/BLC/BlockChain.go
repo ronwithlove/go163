@@ -1,8 +1,10 @@
 package BLC
 
 import (
+	"fmt"
 	"github.com/boltdb/bolt"
 	"log"
+	"math/big"
 )
 
 //区块链管理文件
@@ -90,5 +92,45 @@ func (bc*BlockChain) AddBlock(data []byte){
 	})
 	if err!=nil{
 		log.Panicf("insert block to db failed %v",err)
+	}
+}
+
+//遍历数据库，输出所有区块信息，区块链本身的方法
+func (bc *BlockChain) PrintChain(){
+	//读取数据库
+	fmt.Println("区块链完整信息")
+	var curBlock *Block
+	var currrentHash []byte =bc.Tip
+	//循环读取
+	for{
+		fmt.Println("--------------------------")
+		err:=bc.DB.View(func(tx *bolt.Tx) error {
+			b:=tx.Bucket([]byte(blockTableName))
+			if b!=nil{
+				blockBytes:=b.Get(currrentHash)
+				curBlock=DeSerializeBlock(blockBytes)
+				//输出区块详情
+				fmt.Printf("\tHash: %x\n",curBlock.Hash)
+				fmt.Printf("\tPrevBlockHash: %x\n",curBlock.PrevBlockHash)
+				fmt.Printf("\tTimeStamp: %v\n",curBlock.TimeStamp)
+				fmt.Printf("\tData: %v\n",curBlock.Data)
+				fmt.Printf("\tHeigth: %d\n",curBlock.Heigth)
+				fmt.Printf("\tNonce: %d\n",curBlock.Nonce)
+
+			}
+			return nil
+		})
+		if err != nil {
+			log.Fatal(err)
+		}
+		//退出条件
+		//转换为big.int
+		var hashInt big.Int
+		hashInt.SetBytes(curBlock.PrevBlockHash)
+		if big.NewInt(0).Cmp(&hashInt)==0{//0 表示比较的两者相等， 创世区块是nil,bigInt就是0
+			break//遍历到创世区块,跳出循环
+		}
+		//更新当前要获取的区块的哈希值
+		currrentHash=curBlock.PrevBlockHash
 	}
 }

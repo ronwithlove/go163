@@ -71,10 +71,8 @@ func (block *Block) Serialize() []byte  {
 
 	err := encoder.Encode(block)
 	if err != nil{
-
-		log.Panic(err)
+		log.Panicf("serialize the block to []byte failed! %v \n",err)
 	}
-
 	return result.Bytes()
 }
 
