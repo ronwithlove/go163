@@ -5,6 +5,7 @@ import (
 	"github.com/boltdb/bolt"
 	"log"
 	"math/big"
+	"time"
 )
 
 //区块链管理文件
@@ -112,7 +113,7 @@ func (bc *BlockChain) PrintChain(){
 				//输出区块详情
 				fmt.Printf("\tHash: %x\n",curBlock.Hash)
 				fmt.Printf("\tPrevBlockHash: %x\n",curBlock.PrevBlockHash)
-				fmt.Printf("\tTimeStamp: %v\n",curBlock.TimeStamp)
+				fmt.Printf("\tTimeStamp: %s\n",time.Unix(curBlock.TimeStamp, 0).Format("2006-01-02 15:04:05"))
 				fmt.Printf("\tData: %v\n",curBlock.Data)
 				fmt.Printf("\tHeigth: %d\n",curBlock.Heigth)
 				fmt.Printf("\tNonce: %d\n",curBlock.Nonce)
