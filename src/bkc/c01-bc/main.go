@@ -14,6 +14,7 @@ func main(){
 	bc.AddBlock([]byte("ron sent 10 tc to aaron"))
 	bc.AddBlock([]byte("jacky sent 10 tc to aaron"))
 
+	//查看最新的哈希值
 	bc.DB.View(func(tx *bolt.Tx) error {
 		b:=tx.Bucket([]byte("blocks"))
 		if nil!=b{

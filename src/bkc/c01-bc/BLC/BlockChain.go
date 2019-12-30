@@ -67,11 +67,11 @@ func (bc*BlockChain) AddBlock(data []byte){
 		//1.获取数据库桶
 		b:=tx.Bucket([]byte(blockTableName))
 		if nil !=b{
-			//2.获取最后插入的区块
+			//2.得到最后插入区块的序列化数据
 			blockBytes:=b.Get(bc.Tip)
-			//3.区块数据反序列化
+			//3.反序列化区块数据
 			lastest_block:=DeSerializeBlock(blockBytes)
-			//3.新建区块
+			//3.新建区块 （当前区块高度，上个区块的哈希，当前区块的数据）
 			newBlock:=NewBlock(lastest_block.Heigth+1,lastest_block.Hash,data)
 			//4.存入数据库
 			err:=b.Put(newBlock.Hash,newBlock.Serialize())

@@ -63,7 +63,7 @@ func CreateGenesisBlock(data []byte) *Block{
 	return NewBlock(1,nil,data)//区块高度从1开始
 }
 
-//区块序列化
+//boltDB存储的键值对的数据类型都是字节数组。所以在存储区块前需要对区块进行序列化
 func (block *Block) Serialize() []byte  {
 
 	var result bytes.Buffer
@@ -78,7 +78,7 @@ func (block *Block) Serialize() []byte  {
 	return result.Bytes()
 }
 
-//区块反序列化
+//读取区块的时候就需要做反序列化处理
 func DeSerializeBlock(blockBytes []byte) *Block  {
 
 	var block Block

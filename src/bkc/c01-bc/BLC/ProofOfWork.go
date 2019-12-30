@@ -34,7 +34,7 @@ func NewProofOfWork(block *Block) *ProofOfWork{
 }
 
 //执行pow,比较哈希
-//返回哈希值
+//返回哈希值 碰撞次数
 func(ProofOfWork *ProofOfWork) Run()([]byte, int){
 	//碰撞次数
 	var nonce=0
@@ -47,7 +47,7 @@ func(ProofOfWork *ProofOfWork) Run()([]byte, int){
 		hash =sha256.Sum256(dataBytes)
 		hashInt.SetBytes(hash[:])
 		//检测生成的哈希值是否符合条件
-		if ProofOfWork.target.Cmp(&hashInt)==1{
+		if ProofOfWork.target.Cmp(&hashInt)==1{// ==1：前面的big.Int 实例大于cmp方法里的hashInt 参数
 			//找到了符合条件的哈希值，中断循环
 			break
 		}
@@ -60,7 +60,7 @@ func(ProofOfWork *ProofOfWork) Run()([]byte, int){
 //生成准备数据
 func (pow *ProofOfWork)prepareData(nonce int64) []byte{
 	var data []byte
-	//破解区块属性，进行哈希计算
+	//拼接区块属性，进行哈希计算
 	timeStampBytes:=IntToHex(pow.Block.TimeStamp)//把int转成byte
 	heightBytes:=IntToHex(pow.Block.Heigth)
 	data = bytes.Join([][]byte{
