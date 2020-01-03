@@ -5,9 +5,13 @@ import (
 	"github.com/boltdb/bolt"
 	"log"
 	"math/big"
+	"os"
 	"time"
 )
 
+//相关数据库属性
+const dbName = "block.db"//数据库名
+const blockTableName = "blocks"//表名
 //区块链管理文件
 type BlockChain struct{//直接用切片也可以，但是结构体比较正式一点
 	//Blocks []*Block //区块的切片
@@ -15,12 +19,23 @@ type BlockChain struct{//直接用切片也可以，但是结构体比较正式�
 	Tip 	[]byte		//最新区块的哈希值
 }
 
-//相关数据库属性
-const dbName = "block.db"//数据库名
-const blockTableName = "blocks"//表名
+
+//判断数据库文件是否存在
+func dbExist() bool{
+	if _,err:= os.Stat(dbName);os.IsNotExist(err){
+		//数据库文件不存在
+		return false
+	}
+	return  true
+}
 
 //初始化区块链
 func CreateBlockCHainWithGenesisBlock() *BlockChain{
+	if dbExist(){//如果数据库已经存在
+		fmt.Println("创世区块已存在")
+		os.Exit(1)
+	}
+
 	//保持最新区块的哈希值
 	var blockHash []byte
 	//1.创建或者打开一个数据库
