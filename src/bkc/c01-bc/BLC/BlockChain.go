@@ -143,3 +143,26 @@ func (bc *BlockChain) PrintChain(){
 		}
 	}
 }
+
+//获取一个blockchain对象
+func BlockchainObject() *BlockChain {
+	//获取DB
+	db, err := bolt.Open(dbName, 0600, nil)
+	if err != nil {
+		log.Panicf("create db [%s] failed %v\n",dbName,err)
+	}
+
+	//获取Tip
+	var tip []byte
+	err=db.View(func(tx *bolt.Tx) error {
+		b:=tx.Bucket([]byte(blockTableName))
+		if nil!=b{
+			tip=b.Get([]byte("1"))
+		}
+		return nil
+	})
+	if nil!=err{
+		log.Panicf("get the blockchain object failed! %v\n",err)
+	}
+	return &BlockChain{db, tip}
+}

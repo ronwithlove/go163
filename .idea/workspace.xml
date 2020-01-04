@@ -2,13 +2,58 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="41dd9106-37c3-4b6a-98af-dcbaf8b5cb53" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/CLI.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/163project.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/163project.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/go_build_main_go.exe" beforeDir="false" afterPath="$PROJECT_DIR$/bin/go_build_main_go.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/BlockChain.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/BlockChain.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/CLI.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/CLI.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/ProofOfWork.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/ProofOfWork.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bkc/c01-bc/bc.exe" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/bkc/c01-bc/block.db" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bkc/c01-bc/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/bkc/c01-bc/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bkc/c01-bc/block.db.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/LICENSE" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/appveyor.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/appveyor.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/bolt_386.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/bolt_386.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/bolt_amd64.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/bolt_amd64.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/bolt_arm.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/bolt_arm.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/bolt_arm64.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/bolt_arm64.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/bolt_linux.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/bolt_linux.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/bolt_openbsd.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/bolt_openbsd.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/bolt_ppc.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/bolt_ppc.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/bolt_ppc64.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/bolt_ppc64.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/bolt_ppc64le.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/bolt_ppc64le.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/bolt_s390x.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/bolt_s390x.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/bolt_unix.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/bolt_unix.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/bolt_unix_solaris.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/bolt_unix_solaris.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/bolt_windows.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/bolt_windows.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/boltsync_unix.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/boltsync_unix.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/bucket.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/bucket.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/bucket_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/bucket_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/cmd/bolt/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/cmd/bolt/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/cmd/bolt/main_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/cmd/bolt/main_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/cursor.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/cursor.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/cursor_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/cursor_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/db.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/db.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/db_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/db_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/doc.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/doc.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/errors.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/errors.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/freelist.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/freelist.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/freelist_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/freelist_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/node.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/node.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/node_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/node_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/page.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/page.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/page_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/page_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/quick_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/quick_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/simulation_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/simulation_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/tx.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/tx.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/tx_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/tx_test.go" afterDir="false" />
     </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -24,7 +69,7 @@
       </list>
     </option>
   </component>
-  <component name="GOROOT" path="C:\Go" />
+  <component name="GOROOT" path="/usr/local/go" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -45,19 +90,33 @@
   <component name="PropertiesComponent">
     <property name="DefaultGoTemplateProperty" value="Go File" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="configurable.Global.GOPATH.is.expanded" value="true" />
     <property name="configurable.Module.GOPATH.is.expanded" value="false" />
     <property name="configurable.Project.GOPATH.is.expanded" value="true" />
     <property name="go.import.settings.migrated" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../2" />
-    <property name="settings.editor.selected.configurable" value="com.goide.configuration.GoLibrariesConfigurableProvider" />
+    <property name="go.sdk.automatically.set" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="E:\Ron\GoProjects\163project\src" />
       <recent name="E:\Ron\GoProjects\163project\bkc\c01-bc" />
     </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
   </component>
   <component name="RunManager" selected="Go Build.go build main.go">
     <configuration default="true" type="GoApplicationRunConfiguration" factoryName="Go Application">
@@ -115,20 +174,21 @@
       </list>
     </recent_temporary>
   </component>
-  <component name="ServiceViewManager">
-    <option name="viewStates">
-      <list>
-        <serviceView>
-          <treeState>
-            <expand />
-            <select />
-          </treeState>
-        </serviceView>
-      </list>
-    </option>
-  </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="WindowStateProjectService">
     <state x="1209" y="441" width="1089" height="681" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1577401098704">
