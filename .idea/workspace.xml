@@ -2,17 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="41dd9106-37c3-4b6a-98af-dcbaf8b5cb53" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/163project.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/163project.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/Transaction.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/Block.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/Block.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/BlockChain.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/BlockChain.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/CLI.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/CLI.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/ProofOfWork.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/ProofOfWork.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bkc/c01-bc/bc.exe" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bkc/c01-bc/block.db" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bkc/c01-bc/block.db.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bkc/c01-bc/bc" beforeDir="false" afterPath="$PROJECT_DIR$/src/bkc/c01-bc/bc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/LICENSE" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/Makefile" afterDir="false" />

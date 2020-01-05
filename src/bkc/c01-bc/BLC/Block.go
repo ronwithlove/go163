@@ -16,12 +16,13 @@ type Block struct{
 	Hash			[]byte	//当前区块哈希
 	PrevBlockHash 	[]byte	//前区块哈希
 	Heigth			int64	//区块高度
-	Data			[]byte	//交易数据
+	Txs             []*Transaction //交易数据
+	//Data			[]byte	//交易数据
 	Nonce			int64	//在运行pow时生成的哈希变化值，也代表pow运行的动态修改的数据
 }
 
 //新建区块
-func NewBlock(height int64, prevBlockHash []byte, data []byte) *Block{
+func NewBlock(height int64, prevBlockHash []byte, txs []*Transaction) *Block{
 	var block Block
 
 	block=Block{
@@ -29,10 +30,10 @@ func NewBlock(height int64, prevBlockHash []byte, data []byte) *Block{
 		Hash:nil,//这个是算出来的，现在先nil
 		PrevBlockHash:prevBlockHash,
 		Heigth:height,
-		Data:data,
+		Txs:txs,
 	}
 	//生成哈希
-	block.SetHash()//这行应该废弃没用了
+	//block.SetHash()//这行应该废弃没用了
 	//替换掉setHash
 	//通过POW 生成新的哈希值
 	pow:= NewProofOfWork(&block)
@@ -43,24 +44,25 @@ func NewBlock(height int64, prevBlockHash []byte, data []byte) *Block{
 	return &block
 }
 
+//开始时候临时的方法，已经被POW 替代了
 //计算区块哈希，方法，因为只和Block有关
-func(b *Block) SetHash(){//用指针不需要返回值，要不然太多余
-	//调用sha256实现哈希生成
-	timeStampBytes:=IntToHex(b.TimeStamp)//把int转成byte
-	heightBytes:=IntToHex(b.Heigth)
-	blockBytes:=bytes.Join([][]byte{
-		heightBytes,
-		timeStampBytes,
-		b.PrevBlockHash,
-		b.Data,
-	},[]byte{})//将一系列[]byte切片连接为一个[]byte切片，之间用sep来分隔，返回生成的新切片。
-	hash:=sha256.Sum256(blockBytes)
-	b.Hash=hash[:]//赋值切片所有内容
-}
+//func(b *Block) SetHash(){//用指针不需要返回值，要不然太多余
+//	//调用sha256实现哈希生成
+//	timeStampBytes:=IntToHex(b.TimeStamp)//把int转成byte
+//	heightBytes:=IntToHex(b.Heigth)
+//	blockBytes:=bytes.Join([][]byte{
+//		heightBytes,
+//		timeStampBytes,
+//		b.PrevBlockHash,
+//		b.Data,
+//	},[]byte{})//将一系列[]byte切片连接为一个[]byte切片，之间用sep来分隔，返回生成的新切片。
+//	hash:=sha256.Sum256(blockBytes)
+//	b.Hash=hash[:]//赋值切片所有内容
+//}
 
 //生成创世区块
-func CreateGenesisBlock(data []byte) *Block{
-	return NewBlock(1,nil,data)//区块高度从1开始
+func CreateGenesisBlock(txs []*Transaction) *Block{
+	return NewBlock(1,nil,txs)//区块高度从1开始
 }
 
 //boltDB存储的键值对的数据类型都是字节数组。所以在存储区块前需要对区块进行序列化
@@ -88,5 +90,16 @@ func DeSerializeBlock(blockBytes []byte) *Block  {
 	}
 
 	return &block
+}
+
+//把指定区块所有交易结构都序列化
+func (block *Block) HashTransaction() []byte{
+	var txHashes [][]byte
+	//将指定区块中所有交易哈希进行拼接
+	for _,tx:= range block.Txs{
+		txHashes=append(txHashes,tx.TxHash)
+	}
+	txHash:=sha256.Sum256(bytes.Join(txHashes,[]byte{}))
+	return txHash[:]
 }
 

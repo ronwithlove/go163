@@ -28,19 +28,19 @@ func PrintUsage(){
 }
 
 //初始化区块链
-func(cli *CLI) createBlockchain(){
-	CreateBlockCHainWithGenesisBlock()
+func(cli *CLI) createBlockchain(txs []*Transaction){
+	CreateBlockCHainWithGenesisBlock(txs)
 }
 
 //添加区块
-func (cli *CLI) addBlock(data string){
+func (cli *CLI) addBlock(txs []*Transaction){
 	//判断数据库是否存在
 	if !dbExist(){
 		fmt.Println("数据库不存在")
 		os.Exit(1)
 	}
 	blockchain:=BlockchainObject()//获取到最新的blockchain的对象实例
-	blockchain.AddBlock([]byte(data))//新加区块
+	blockchain.AddBlock(txs)//新加区块
 	//cli.BC.AddBlock([]byte(data))//删除，没有必要了
 }
 
@@ -109,7 +109,7 @@ func (cli *CLI)Run(){
 		PrintUsage()
 		os.Exit(1)//直接退出
 		}
-		cli.addBlock(*flagAddBlockArg)//如果有就把参数传进去
+		cli.addBlock([]*Transaction{})//如果有就把参数传进去 //暂时穿个空的
 	}
 	//输出区块链信息
 	if printChainCmd.Parsed(){
@@ -117,6 +117,6 @@ func (cli *CLI)Run(){
 	}
 	//创建区块链命令
 	if createBLCWithGenesisBlockCmd.Parsed(){
-		cli.createBlockchain()
+		cli.createBlockchain([]*Transaction{})//暂时给一个空的
 	}
 }
