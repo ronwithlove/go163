@@ -25,8 +25,27 @@ func PrintUsage(){
 	fmt.Printf("\taddblock -data DATA -- 添加区块\n")
 	//打印完整的区块信息
 	fmt.Printf("\tprintchain -- 打印区块链\n")
+	//通过命令转账
+	fmt.Printf("\tsend- from FROM -to TO -amount AMOUNT -- 发起转账\n")
+	fmt.Printf("\t转账参数说明:\n")
+	fmt.Printf("\t\t-from FROM -- 转账源地址\n")
+	fmt.Printf("\t\t-from TO -- 转账目标地址\n")
+		fmt.Printf("\t\t-AMOUNT amount -- 转账金额\n")
 }
 
+//参数数量检测函数
+func IsValidArgs(){
+	if len(os.Args)<2{
+		PrintUsage()
+		//直接退出
+		os.Exit(1)
+	}
+}
+
+//发起交易
+func (cli *CLI) send(){
+
+}
 //初始化区块链
 func(cli *CLI) createBlockchain(address string){
 	CreateBlockCHainWithGenesisBlock(address)
@@ -55,14 +74,6 @@ func(cli *CLI) printchain(){
 	blockchain.PrintChain()
 }
 
-//参数数量检测函数
-func IsValidArgs(){
-	if len(os.Args)<2{
-		PrintUsage()
-		//直接退出
-		os.Exit(1)
-	}
-}
 
 //命令行运行函数
 func (cli *CLI)Run(){
@@ -75,15 +86,26 @@ func (cli *CLI)Run(){
 	printChainCmd:=flag.NewFlagSet("printchain",flag.ExitOnError)
 	//创建区块链
 	createBLCWithGenesisBlockCmd:=flag.NewFlagSet("createblockchain",flag.ExitOnError)
-
+	//发起交易
+	sendCmd:=flag.NewFlagSet("send",flag.ExitOnError)
 	//数据参数处理
 	//1.添加区块
 	flagAddBlockArg:=addBlockCmd.String("data","sent 100 btc to user","添加区块数据")
 	//2.创建区块链指定的矿工地址（矿工接收奖励）
 	flagCreateBlockchainArg:=createBLCWithGenesisBlockCmd.String("address",
 		"troytan","指定接收系统奖励的矿工地址")
+	//发起交易参数
+	flagSendFromArg:= sendCmd.String("from","","转账源地址")
+	flagSendToArg:= sendCmd.String("to","","转账目标地址")
+	flagSendAmountArg:= sendCmd.String("amount","","转账金额")
+
 	//判断命令
 	switch os.Args[1] {//判断第二个命令
+	case "send":
+		err:=sendCmd.Parse(os.Args[2:])
+		if err!=nil {
+			log.Printf("parse sendCmd failed! %v\n",err)
+		}
 	case "addblock":
 		err:=addBlockCmd.Parse(os.Args[2:])
 		if err!=nil {
@@ -105,7 +127,29 @@ func (cli *CLI)Run(){
 		os.Exit(1)
 
 	}
+	//发起转账
+	if sendCmd.Parsed(){
+		if *flagSendFromArg==""{//如果没有输入参数
+			fmt.Printf("源地址不能为空")
+			PrintUsage()
+			os.Exit(1)//直接退出
+		}
+		if *flagSendToArg==""{//如果没有输入参数
+			fmt.Printf("转账目标地址不能为空")
+			PrintUsage()
+			os.Exit(1)//直接退出
+		}
+		if *flagSendAmountArg==""{//如果没有输入参数
+			fmt.Printf("转账金额不能为空")
+			PrintUsage()
+			os.Exit(1)//直接退出
+		}
+		//先打印测试一下看看
+		fmt.Printf("\tFROM:[%s]\n",*flagSendFromArg)
+		fmt.Printf("\tTO:[%s]\n",*flagSendToArg)
+		fmt.Printf("\tAMOUNT:[%s]\n",*flagSendAmountArg)
 
+	}
 	//添加区块命令
 	if addBlockCmd.Parsed(){
 		if *flagAddBlockArg==""{//如果没有输入参数
