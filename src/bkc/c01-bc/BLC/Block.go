@@ -92,7 +92,7 @@ func DeSerializeBlock(blockBytes []byte) *Block  {
 	return &block
 }
 
-//把指定区块所有交易结构都序列化
+//把指定区块所有交易结构都序列化(类Merkle的哈希计算方法)
 func (block *Block) HashTransaction() []byte{
 	var txHashes [][]byte
 	//将指定区块中所有交易哈希进行拼接

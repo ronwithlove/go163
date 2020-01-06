@@ -4,10 +4,8 @@ package BLC
 
 //输入结构
 type TxInput struct{
-	//交易哈希，非当前交易哈希
-	TxHash		[]byte
-	//引用上一笔交易的输出索引号
-	Vout	int
-	//用户名
-	ScriptSig	string
+	TxHash		[]byte	//交易哈希，这笔钱从哪个区块来
+	Vout	int	//引用上一笔交易的输出索引号，一个区块里会有好多交易
+	ScriptSig	string	//用户名，准备花钱的人
+
 }
