@@ -145,9 +145,9 @@ func (cli *CLI)Run(){
 			os.Exit(1)//直接退出
 		}
 		//先打印测试一下看看
-		fmt.Printf("\tFROM:[%s]\n",*flagSendFromArg)
-		fmt.Printf("\tTO:[%s]\n",*flagSendToArg)
-		fmt.Printf("\tAMOUNT:[%s]\n",*flagSendAmountArg)
+		fmt.Printf("\tFROM:[%s]\n",JSONToSlice(*flagSendFromArg))
+		fmt.Printf("\tTO:[%s]\n",JSONToSlice(*flagSendToArg))
+		fmt.Printf("\tAMOUNT:[%s]\n",JSONToSlice(*flagSendAmountArg))
 
 	}
 	//添加区块命令
