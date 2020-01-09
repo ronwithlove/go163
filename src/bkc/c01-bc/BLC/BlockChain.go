@@ -153,7 +153,7 @@ func BlockchainObject() *BlockChain {
 	if err != nil {
 		log.Panicf("create db [%s] failed %v\n",dbName,err)
 	}
-
+	//defer db.Close()//不可以在这里关，这里把数据库实例给关里，接下来做任何操作都没用了。
 	//获取Tip
 	var tip []byte
 	err=db.View(func(tx *bolt.Tx) error {
@@ -167,4 +167,44 @@ func BlockchainObject() *BlockChain {
 		log.Panicf("get the blockchain object failed! %v\n",err)
 	}
 	return &BlockChain{db, tip}
+}
+
+//实现挖矿功能
+//通过接收交易，生成区块
+func(blockchain *BlockChain) MineNewBlock(){
+	var block *Block
+	//搁置交易生成步骤
+	var txs []*Transaction
+	//从数据库中获取最新的一个区块
+	blockchain.DB.View(func(tx *bolt.Tx) error {
+		b:=tx.Bucket([]byte(blockTableName))
+		if b!=nil{
+			//获取最新的区块哈希值放在key为1的上面
+			hash:=b.Get([]byte("1"))
+			//再通过哈希获取最新区块
+			blockBytes:=b.Get(hash)
+			//反序列化
+			block=DeSerializeBlock(blockBytes)
+		}
+		return nil
+	})
+	//通过数据库中最新的区块去生成更新的区块
+	block=NewBlock(block.Heigth+1,block.Hash,txs)
+	//持计划新生成的区块到数据库中
+	blockchain.DB.Update(func(tx *bolt.Tx) error {
+		b:=tx.Bucket([]byte(blockTableName))
+		if nil!=b{
+			err:=b.Put(block.Hash, block.Serialize())
+			if err!=nil{
+				log.Printf("update the new block to db failed %v\n",err)
+			}
+			//更新区块的哈希值
+			err=b.Put([]byte("1"),block.Hash)
+			if err!=nil{
+				log.Printf("update the lastest block hash to db failed %v\n",err)
+			}
+			blockchain.Tip=block.Hash
+		}
+		return nil
+	})
 }
