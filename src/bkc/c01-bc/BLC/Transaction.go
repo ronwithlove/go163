@@ -16,7 +16,7 @@ type Transaction struct{
 	//输入列表
 	Vins 		[]*TxInput
 	//输出列表
-	Vous 		[]*TxOutput
+	Vouts []*TxOutput
 }
 
 //实现coinbase交易
@@ -47,4 +47,33 @@ func (tx *Transaction) HashTransaction(){
 	//生成哈希值
 	hash:=sha256.Sum256(result.Bytes())
 	tx.TxHash=hash[:]
+}
+
+//生成普通转账交易
+func NewSimpleTransaction(from string, to string, amount int) *Transaction{
+	var txInputs []*TxInput
+	var txOutupts []*TxOutput
+
+	//输入
+	txInput:=&TxInput{
+		TxHash:    []byte("d8e4a7d4a751428d9cd468ad539386253ab31fe4dc7aca05cbca9a74e3cc60ac"),
+		Vout:      0,
+		ScriptSig: from,
+	}
+	txInputs= append(txInputs, txInput)//追加到输入交易中
+
+	//输出
+	txOutput :=&TxOutput{
+		Value:        amount,
+		ScriptPubkey: to,
+	}
+	txOutupts=append(txOutupts, txOutput) //追加到输出交易中
+	//输出（找零）
+	if amount<10{
+		txOutput =&TxOutput{10-amount,from}//找零，找回给自己
+		txOutupts=append(txOutupts, txOutput) //再把这笔交易追加到输出交易中
+	}
+	tx:=Transaction{nil,txInputs,txOutupts}
+	tx.HashTransaction()
+	return &tx
 }

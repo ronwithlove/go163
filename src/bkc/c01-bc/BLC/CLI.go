@@ -43,7 +43,7 @@ func IsValidArgs(){
 }
 
 //发起交易
-func (cli *CLI) send(){
+func (cli *CLI) send(from, to , amount []string){
 	if !dbExist(){
 		fmt.Printf("数据库不存在")
 		os.Exit(1)
@@ -51,7 +51,7 @@ func (cli *CLI) send(){
 	//获取区块链对象
 	blockchain:=BlockchainObject()
 	defer blockchain.DB.Close()
-	blockchain.MineNewBlock()
+	blockchain.MineNewBlock(from, to , amount)
 }
 
 //初始化区块链
@@ -156,7 +156,7 @@ func (cli *CLI)Run(){
 		fmt.Printf("\tFROM:[%s]\n",JSONToSlice(*flagSendFromArg))
 		fmt.Printf("\tTO:[%s]\n",JSONToSlice(*flagSendToArg))
 		fmt.Printf("\tAMOUNT:[%s]\n",JSONToSlice(*flagSendAmountArg))
-
+		cli.send(JSONToSlice(*flagSendFromArg),JSONToSlice(*flagSendToArg),JSONToSlice(*flagSendAmountArg))
 	}
 	//添加区块命令
 	if addBlockCmd.Parsed(){

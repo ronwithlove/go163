@@ -6,6 +6,7 @@ import (
 	"log"
 	"math/big"
 	"os"
+	"strconv"
 	"time"
 )
 
@@ -132,9 +133,25 @@ func (bc *BlockChain) PrintChain(){
 		fmt.Printf("\tHash: %x\n",curBlock.Hash)
 		fmt.Printf("\tPrevBlockHash: %x\n",curBlock.PrevBlockHash)
 		fmt.Printf("\tTimeStamp: %s\n",time.Unix(curBlock.TimeStamp, 0).Format("2006-01-02 15:04:05"))
-		fmt.Printf("\tTxs: %v\n",curBlock.Txs)
 		fmt.Printf("\tHeigth: %d\n",curBlock.Heigth)
 		fmt.Printf("\tNonce: %d\n",curBlock.Nonce)
+		fmt.Printf("\tTxs: %v\n",curBlock.Txs)
+		for _, tx:= range curBlock.Txs{
+			fmt.Printf("\t\ttx-hash: %x\n",tx.TxHash)
+			fmt.Printf("\t\t输入...\n")
+			for _, vin:= range tx.Vins{
+				fmt.Printf("\t\t\tvin-txHash : %x\n",vin.TxHash)
+				fmt.Printf("\t\t\tprevious vout index: %x\n",vin.Vout)
+				fmt.Printf("\t\t\tvin-scriptSig : %v\n",vin.ScriptSig)
+			}
+			fmt.Printf("\t\t输出...\n")
+			for _, vout:=range tx.Vouts {
+				fmt.Printf("\t\t\tout-value:%d\n",vout.Value)
+				fmt.Printf("\t\t\tout-scriptPubkey:%v\n",vout.ScriptPubkey)
+
+			}
+		}
+
 		//退出条件
 		//转换为big.int
 		var hashInt big.Int
@@ -171,10 +188,15 @@ func BlockchainObject() *BlockChain {
 
 //实现挖矿功能
 //通过接收交易，生成区块
-func(blockchain *BlockChain) MineNewBlock(){
+func(blockchain *BlockChain) MineNewBlock(from, to , amount []string){
 	var block *Block
 	//搁置交易生成步骤
 	var txs []*Transaction
+	value,_:=strconv.Atoi(amount[0])
+	//生成新的交易
+	tx:=NewSimpleTransaction(from[0],to[0],value)
+	//最加到txs的交易列表中去
+	txs=append(txs,tx)
 	//从数据库中获取最新的一个区块
 	blockchain.DB.View(func(tx *bolt.Tx) error {
 		b:=tx.Bucket([]byte(blockTableName))
