@@ -32,9 +32,6 @@ func NewBlock(height int64, prevBlockHash []byte, txs []*Transaction) *Block{
 		Heigth:height,
 		Txs:txs,
 	}
-	//生成哈希
-	//block.SetHash()//这行应该废弃没用了
-	//替换掉setHash
 	//通过POW 生成新的哈希值
 	pow:= NewProofOfWork(&block)
 	//执行工作量证明算法
@@ -43,22 +40,6 @@ func NewBlock(height int64, prevBlockHash []byte, txs []*Transaction) *Block{
 	block.Nonce=int64(nonce)
 	return &block
 }
-
-//开始时候临时的方法，已经被POW 替代了
-//计算区块哈希，方法，因为只和Block有关
-//func(b *Block) SetHash(){//用指针不需要返回值，要不然太多余
-//	//调用sha256实现哈希生成
-//	timeStampBytes:=IntToHex(b.TimeStamp)//把int转成byte
-//	heightBytes:=IntToHex(b.Heigth)
-//	blockBytes:=bytes.Join([][]byte{
-//		heightBytes,
-//		timeStampBytes,
-//		b.PrevBlockHash,
-//		b.Data,
-//	},[]byte{})//将一系列[]byte切片连接为一个[]byte切片，之间用sep来分隔，返回生成的新切片。
-//	hash:=sha256.Sum256(blockBytes)
-//	b.Hash=hash[:]//赋值切片所有内容
-//}
 
 //生成创世区块
 func CreateGenesisBlock(txs []*Transaction) *Block{

@@ -192,7 +192,7 @@ func(blockchain *BlockChain) MineNewBlock(from, to , amount []string){
 	var block *Block
 	//搁置交易生成步骤
 	var txs []*Transaction
-	value,_:=strconv.Atoi(amount[0])
+	value,_:=strconv.Atoi(amount[0])//转成int
 	//生成新的交易
 	tx:=NewSimpleTransaction(from[0],to[0],value)
 	//最加到txs的交易列表中去
