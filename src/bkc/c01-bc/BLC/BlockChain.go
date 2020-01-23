@@ -230,3 +230,9 @@ func(blockchain *BlockChain) MineNewBlock(from, to , amount []string){
 		return nil
 	})
 }
+
+//查找指定地址的UTXO
+func(blockchain *BlockChain) UnUTXOS(address string) []*TxOutput{//整条链可能会有多个，所以要数组
+	fmt.Printf("exec the UnUTXOS function\n")
+	return nil
+}

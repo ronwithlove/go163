@@ -9,3 +9,10 @@ type TxInput struct{
 	ScriptSig	string	//用户名，准备花钱的人
 
 }
+
+
+//验证应用的地址是否匹配
+func (txIntput *TxInput) CheckPubkeyWithAddress(address string)bool{
+	return address==txIntput.ScriptSig
+}
+

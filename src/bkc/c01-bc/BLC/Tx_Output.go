@@ -7,3 +7,10 @@ type TxOutput struct{
 	Value 	int//金额 收钱的金额
 	ScriptPubkey 	string//用户名(UTXO 的所有者) 收钱的人
 }
+
+//通过检查出入地址和key是否相等来，验证当前UTXO是否属于指定的地址
+func (txOutput *TxOutput) CheckPubkeyWithAddress(address string)bool{
+	return address==txOutput.ScriptPubkey
+}
+
+
