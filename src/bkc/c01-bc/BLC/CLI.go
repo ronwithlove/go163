@@ -30,7 +30,11 @@ func PrintUsage(){
 	fmt.Printf("\t转账参数说明:\n")
 	fmt.Printf("\t\t-from FROM -- 转账源地址\n")
 	fmt.Printf("\t\t-from TO -- 转账目标地址\n")
-		fmt.Printf("\t\t-AMOUNT amount -- 转账金额\n")
+	fmt.Printf("\t\t-AMOUNT amount -- 转账金额\n")
+	//查询余额
+	fmt.Printf("\tgetbalance -address FROM -- 查询指定地址的余额")
+	fmt.Println("\t查询余额参数说明")
+	fmt.Printf("\t\t-address -- 查询余额的地址 ")
 }
 
 //参数数量检测函数
@@ -41,6 +45,13 @@ func IsValidArgs(){
 		os.Exit(1)
 	}
 }
+
+//查询余额
+func (cli *CLI) getBalance(from string){
+	//查找改地址UTXO
+	//这里是写需要执行的查询函数
+}
+
 
 //发起交易
 func (cli *CLI) send(from, to , amount []string){
@@ -96,6 +107,8 @@ func (cli *CLI)Run(){
 	createBLCWithGenesisBlockCmd:=flag.NewFlagSet("createblockchain",flag.ExitOnError)
 	//发起交易
 	sendCmd:=flag.NewFlagSet("send",flag.ExitOnError)
+	//查询余额的命令
+	getBalanceCmd:=flag.NewFlagSet("getbalance",flag.ExitOnError)
 	//数据参数处理
 	//1.添加区块
 	flagAddBlockArg:=addBlockCmd.String("data","sent 100 btc to user","添加区块数据")
@@ -106,9 +119,15 @@ func (cli *CLI)Run(){
 	flagSendFromArg:= sendCmd.String("from","","转账源地址")
 	flagSendToArg:= sendCmd.String("to","","转账目标地址")
 	flagSendAmountArg:= sendCmd.String("amount","","转账金额")
-
+	//查询余额命令行参数
+	flagGetBalanceArg:=getBalanceCmd.String("address","","要查询的地址")
 	//判断命令
 	switch os.Args[1] {//判断第二个命令
+	case "getbalance":
+		err:=getBalanceCmd.Parse(os.Args[2:])
+		if err!=nil {
+			log.Printf("parse cmd get Balance  failed! %v\n",err)
+		}
 	case "send":
 		err:=sendCmd.Parse(os.Args[2:])
 		if err!=nil {
@@ -134,6 +153,15 @@ func (cli *CLI)Run(){
 		PrintUsage()
 		os.Exit(1)
 
+	}
+
+	//查询余额
+	if getBalanceCmd.Parsed(){
+		if *flagGetBalanceArg==""{
+			fmt.Println("请输入查询地址")
+			os.Exit(1)
+		}
+		cli.getBalance(*flagGetBalanceArg)
 	}
 	//发起转账
 	if sendCmd.Parsed(){
