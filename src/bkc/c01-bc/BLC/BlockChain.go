@@ -1,6 +1,7 @@
 package BLC
 
 import (
+	"encoding/hex"
 	"fmt"
 	"github.com/boltdb/bolt"
 	"log"
@@ -231,8 +232,63 @@ func(blockchain *BlockChain) MineNewBlock(from, to , amount []string){
 	})
 }
 
+//获取指定地址已花费输出,把所有input的交易找到
+func (blockchain *BlockChain) SpentOutpts(address string) map[string][]int {
+	//已花费输出缓存
+	spentTXOutputs:=make(map[string][]int)
+	bcit:=blockchain.Iterator()
+	for{
+		bcit.Next()
+		block:=bcit.Next()
+		for _, tx:= range block.Txs{
+			for _, in:=range tx.Vins{//一个block里会有多个input
+				if in.CheckPubkeyWithAddress(address){}
+					key:=hex.EncodeToString(in.TxHash)//交易哈希转成string作为key
+					//添加到已花费输出的缓存中
+					spentTXOutputs[key]= append(spentTXOutputs[key], in.Vout)//在一笔交易中某个人可能有多个输出，都收集起来放到数组里
+			}
+		}
+		//退出循环条件,直到创世区块
+		var hashInt big.Int
+		hashInt.SetBytes(block.PrevBlockHash)
+		if hashInt.Cmp(big.NewInt(0))==0{
+			break
+		}
+	}
+	return spentTXOutputs
+}
+
 //查找指定地址的UTXO
+/*
+	遍历查找区块链数据库中的每一个区块中的每一个交易
+	查找每一个交易中的每一个输出
+	判断每个输出是否满足下列条件
+	1.属于传入的地址
+	2.是否未被花费
+		1.先遍历一次区块链数据库，将所有自己花费的OUTPUT存入一个缓存
+		2.再次遍历区块链数据库，检查每一个VOUT饭否包含在前面的已花费的缓存中
+ */
 func(blockchain *BlockChain) UnUTXOS(address string) []*TxOutput{//整条链可能会有多个，所以要数组
-	fmt.Printf("exec the UnUTXOS function\n")
+	//1.遍历数据库，查找所有与address相关的交易
+	//获取迭代器
+	bcit:=blockchain.Iterator()
+	//获取指定地址所有已花费输出
+	//迭代，不断获取下一个区块
+	for{
+		block:=bcit.Next()
+		//遍历区块中的每笔交易
+		for _, tx:= range block.Txs{
+			for index,vout:=range tx.Vouts{
+				//index:当前输出再当前交易的中索引位置
+				//vout:当前输出
+				if vout.CheckPubkeyWithAddress(address){
+					//当前vout属于传入地址
+				}
+			}
+		}
+	}
+
 	return nil
 }
+
+//还为完成，视频52 00
