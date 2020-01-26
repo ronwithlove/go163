@@ -77,3 +77,9 @@ func NewSimpleTransaction(from string, to string, amount int) *Transaction{
 	tx.HashTransaction()
 	return &tx
 }
+
+
+//判断指定的交易是否是一个coinbase交易
+func (tx *Transaction) IsCoinbaseTransaction() bool{
+	return  tx.Vins[0].Vout==-1 && len(tx.Vins[0].TxHash)==0//满足&&前一个判断也就是coinbase交易了
+}

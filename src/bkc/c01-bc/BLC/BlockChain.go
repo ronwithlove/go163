@@ -238,16 +238,18 @@ func (blockchain *BlockChain) SpentOutpts(address string) map[string][]int {
 	spentTXOutputs:=make(map[string][]int)
 	bcit:=blockchain.Iterator()
 	for{
-		bcit.Next()
 		block:=bcit.Next()
 		for _, tx:= range block.Txs{//一个block里会有多个交易
-			for _, in:=range tx.Vins{//一个交易里会有多个input
-				if in.CheckPubkeyWithAddress(address){}
+			//排除coinbase交易
+			if!tx.IsCoinbaseTransaction(){
+				for _, in:=range tx.Vins{//一个交易里会有多个input
+					if in.CheckPubkeyWithAddress(address){}
 					key:=hex.EncodeToString(in.TxHash)//交易哈希转成string保存，作为key
 					//添加到已花费输出的缓存中
 					spentTXOutputs[key]= append(spentTXOutputs[key], in.Vout)
 					//在一个Input中某个人可能有多条记录in.Vout(index,引用上一笔交易的输出索引号)
 					//保存在以哈希为key,value是int的数组中
+				}
 			}
 		}
 		//退出循环条件,直到创世区块
@@ -326,4 +328,13 @@ func(blockchain *BlockChain) UnUTXOS(address string) []*TxOutput{//整条链可�
 	return unUTXOS
 }
 
-//还为完成，视频52 3:45
+
+//查询余额
+func (blockchain *BlockChain) getBalance (address string) int{
+	var amount int
+	utxos:=blockchain.UnUTXOS(address)
+	for _, utxo := range utxos{
+		amount+=utxo.Value
+	}
+	return  amount
+}
