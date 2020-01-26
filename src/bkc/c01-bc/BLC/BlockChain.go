@@ -232,7 +232,7 @@ func(blockchain *BlockChain) MineNewBlock(from, to , amount []string){
 	})
 }
 
-//获取指定地址已花费输出,把所有input的交易找到
+//获取指定地址已花费输出,虽然叫已花费输出，就是区块交易中的Input,不是Output不要搞混
 func (blockchain *BlockChain) SpentOutpts(address string) map[string][]int {
 	//已花费输出缓存
 	spentTXOutputs:=make(map[string][]int)
@@ -240,12 +240,14 @@ func (blockchain *BlockChain) SpentOutpts(address string) map[string][]int {
 	for{
 		bcit.Next()
 		block:=bcit.Next()
-		for _, tx:= range block.Txs{
-			for _, in:=range tx.Vins{//一个block里会有多个input
+		for _, tx:= range block.Txs{//一个block里会有多个交易
+			for _, in:=range tx.Vins{//一个交易里会有多个input
 				if in.CheckPubkeyWithAddress(address){}
-					key:=hex.EncodeToString(in.TxHash)//交易哈希转成string作为key
+					key:=hex.EncodeToString(in.TxHash)//交易哈希转成string保存，作为key
 					//添加到已花费输出的缓存中
-					spentTXOutputs[key]= append(spentTXOutputs[key], in.Vout)//在一笔交易中某个人可能有多个输出，都收集起来放到数组里
+					spentTXOutputs[key]= append(spentTXOutputs[key], in.Vout)
+					//在一个Input中某个人可能有多条记录in.Vout(index,引用上一笔交易的输出索引号)
+					//保存在以哈希为key,value是int的数组中
 			}
 		}
 		//退出循环条件,直到创世区块
@@ -263,10 +265,10 @@ func (blockchain *BlockChain) SpentOutpts(address string) map[string][]int {
 	遍历查找区块链数据库中的每一个区块中的每一个交易
 	查找每一个交易中的每一个输出
 	判断每个输出是否满足下列条件
-	1.属于传入的地址
+	1.属于传入的地址(就是谁，谁花了钱)
 	2.是否未被花费
 		1.先遍历一次区块链数据库，将所有自己花费的OUTPUT存入一个缓存
-		2.再次遍历区块链数据库，检查每一个VOUT饭否包含在前面的已花费的缓存中
+		2.再次遍历区块链数据库，检查每一个VOUT是否包含在前面的已花费的缓存中
  */
 func(blockchain *BlockChain) UnUTXOS(address string) []*TxOutput{//整条链可能会有多个，所以要数组
 	//1.遍历数据库，查找所有与address相关的交易
@@ -274,26 +276,24 @@ func(blockchain *BlockChain) UnUTXOS(address string) []*TxOutput{//整条链可�
 	bcit:=blockchain.Iterator()
 	//当前地址的未花费输出列表
 	var unUTXOS []*TxOutput
-	//获取指定地址所有已花费输出
+	//获取指定地址所有已花费输出，得到改地址的所有的input
 	spentTXOutputs:=blockchain.SpentOutpts(address)
 	//迭代，不断获取下一个区块
 	for{
 		block:=bcit.Next()
 		//遍历区块中的每笔交易
-		for _, tx:= range block.Txs{
+		for _, tx:= range block.Txs{//每个区块有多个交易
 			//跳转
 			work:
-			for index,vout:=range tx.Vouts{
-				//index:当前输出再当前交易的中索引位置
+			for index,vout:=range tx.Vouts{//每个交易有多个output(tx中output是数组)
+				//index：当前输出在当前交易的中索引位置
 				//vout:当前输出
 				if vout.CheckPubkeyWithAddress(address){
 					//当前vout属于传入地址
 					if len(spentTXOutputs)!=0{
 						var isSpentOutput bool//默认就是false
-						for txHash, indexArray :=range spentTXOutputs{
-							for _, i:=range indexArray{
-								//txHash:当前输出引用的交易哈希
-								//indexArrary:哈希关联的vout索引列表
+						for txHash, indexArray :=range spentTXOutputs{//遍历key=txHash,value=indexArray
+							for _, i:=range indexArray{//遍历array内保存的多条in.Vout记录
 								if txHash==hex.EncodeToString(tx.TxHash)&&index==i{
 									//txHash== hex.EncodeToString(tx.TxHash),
 									//说明当前的交易tx至少已经有输出被其他交易的输入引用
