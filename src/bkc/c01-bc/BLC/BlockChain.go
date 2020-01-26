@@ -272,23 +272,58 @@ func(blockchain *BlockChain) UnUTXOS(address string) []*TxOutput{//整条链可�
 	//1.遍历数据库，查找所有与address相关的交易
 	//获取迭代器
 	bcit:=blockchain.Iterator()
+	//当前地址的未花费输出列表
+	var unUTXOS []*TxOutput
 	//获取指定地址所有已花费输出
+	spentTXOutputs:=blockchain.SpentOutpts(address)
 	//迭代，不断获取下一个区块
 	for{
 		block:=bcit.Next()
 		//遍历区块中的每笔交易
 		for _, tx:= range block.Txs{
+			//跳转
+			work:
 			for index,vout:=range tx.Vouts{
 				//index:当前输出再当前交易的中索引位置
 				//vout:当前输出
 				if vout.CheckPubkeyWithAddress(address){
 					//当前vout属于传入地址
+					if len(spentTXOutputs)!=0{
+						var isSpentOutput bool//默认就是false
+						for txHash, indexArray :=range spentTXOutputs{
+							for _, i:=range indexArray{
+								//txHash:当前输出引用的交易哈希
+								//indexArrary:哈希关联的vout索引列表
+								if txHash==hex.EncodeToString(tx.TxHash)&&index==i{
+									//txHash== hex.EncodeToString(tx.TxHash),
+									//说明当前的交易tx至少已经有输出被其他交易的输入引用
+									//index==i 说明正好是当前的输出被其他交易引用
+									//跳转到最外层循环，判断下一个VOUT
+									isSpentOutput=true
+									continue work
+								}
+							}
+						}
+						if isSpentOutput==false{
+							unUTXOS=append(unUTXOS,vout)
+						}
+					}else{//如果长度为0，表示没有找到output信息，就表示他没花过钱
+						//将当前地址所有输出都添加到未花费输出中
+						unUTXOS=append(unUTXOS,vout)
+					}
 				}
 			}
 		}
+
+		//退出循环条件,直到创世区块
+		var hashInt big.Int
+		hashInt.SetBytes(block.PrevBlockHash)
+		if hashInt.Cmp(big.NewInt(0))==0{
+			break
+		}
 	}
 
-	return nil
+	return unUTXOS
 }
 
-//还为完成，视频52 00
+//还为完成，视频52 3:45
