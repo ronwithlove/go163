@@ -22,7 +22,7 @@ func PrintUsage(){
 	//初始化区块链
 	fmt.Printf("\tcreateblockchain -address address -- 创建区块链\n")
 	//添加区块
-	fmt.Printf("\taddblock -data DATA -- 添加区块\n")
+	//fmt.Printf("\taddblock -data DATA -- 添加区块\n")
 	//打印完整的区块信息
 	fmt.Printf("\tprintchain -- 打印区块链\n")
 	//通过命令转账
@@ -37,43 +37,13 @@ func PrintUsage(){
 	fmt.Printf("\t\t-address -- 查询余额的地址\n")
 }
 
-//参数数量检测函数
-func IsValidArgs(){
-	if len(os.Args)<2{
-		PrintUsage()
-		//直接退出
-		os.Exit(1)
-	}
-}
-
-//查询余额
-func (cli *CLI) getBalance(from string){
-	//查找改地址UTXO
-	//这里是写需要执行的查询函数
-	//获取区块链对象
-	blockchain:=BlockchainObject()
-	defer blockchain.DB.Close()//关闭实例对象
-	amount:=blockchain.getBalance(from)
-	fmt.Printf("\t地址[%s]的余额[%d]\n",from,amount)
-}
 
 
-//发起交易
-func (cli *CLI) send(from, to , amount []string){
-	if !dbExist(){
-		fmt.Printf("数据库不存在")
-		os.Exit(1)
-	}
-	//获取区块链对象
-	blockchain:=BlockchainObject()
-	defer blockchain.DB.Close()
-	blockchain.MineNewBlock(from, to , amount)
-}
 
-//初始化区块链
-func(cli *CLI) createBlockchain(address string){
-	CreateBlockCHainWithGenesisBlock(address)
-}
+
+
+
+
 
 //添加区块
 func (cli *CLI) addBlock(txs []*Transaction){
@@ -87,16 +57,6 @@ func (cli *CLI) addBlock(txs []*Transaction){
 	//cli.BC.AddBlock([]byte(data))//删除，没有必要了
 }
 
-//打印完整区块链信息
-func(cli *CLI) printchain(){
-	//判断数据库是否存在
-	if !dbExist(){
-		fmt.Println("数据库不存在")
-		os.Exit(1)
-	}
-	blockchain:=BlockchainObject()//获取到最新的blockchain的对象实例
-	blockchain.PrintChain()
-}
 
 
 //命令行运行函数

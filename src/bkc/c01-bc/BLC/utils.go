@@ -5,7 +5,17 @@ import (
 	"encoding/binary"
 	"encoding/json"
 	"log"
+	"os"
 )
+
+//参数数量检测函数
+func IsValidArgs(){
+	if len(os.Args)<2{
+		PrintUsage()
+		//直接退出
+		os.Exit(1)
+	}
+}
 
 //实现int64转[]byte,函数
 func IntToHex(data int64)[]byte{
