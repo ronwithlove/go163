@@ -4,6 +4,8 @@ import (
 	"bytes"
 	"crypto/sha256"
 	"encoding/gob"
+	"encoding/hex"
+	"fmt"
 	"log"
 )
 
@@ -50,17 +52,31 @@ func (tx *Transaction) HashTransaction(){
 }
 
 //生成普通转账交易
-func NewSimpleTransaction(from string, to string, amount int) *Transaction{
+func NewSimpleTransaction(from string, to string, amount int,bc *BlockChain) *Transaction{
 	var txInputs []*TxInput
 	var txOutupts []*TxOutput
 
+	//调用可花费UTXO函数
+	money,spendableUTXODic:=bc.FindSpendableUTXO(from,amount)
+	fmt.Printf("money:%v\n",money)
 	//输入
-	txInput:=&TxInput{
-		TxHash:    []byte("d8e4a7d4a751428d9cd468ad539386253ab31fe4dc7aca05cbca9a74e3cc60ac"),
-		Vout:      0,
-		ScriptSig: from,
+	for txHash,indexArray:=range spendableUTXODic{
+		txHashesBytes,err:=hex.DecodeString(txHash)
+		if nil!=err{
+			log.Panicf("decode string to []byte failed! %v\n",err)
+		}
+		//遍历索引列表
+		for _, index:=range indexArray{
+			txInput:=&TxInput{txHashesBytes,index,from}
+			txInputs=append(txInputs,txInput)
+		}
 	}
-	txInputs= append(txInputs, txInput)//追加到输入交易中
+	//txInput:=&TxInput{
+	//	TxHash:    []byte("d8e4a7d4a751428d9cd468ad539386253ab31fe4dc7aca05cbca9a74e3cc60ac"),
+	//	Vout:      0,
+	//	ScriptSig: from,
+	//}
+	//txInputs= append(txInputs, txInput)//追加到输入交易中
 
 	//输出
 	txOutput :=&TxOutput{
@@ -69,9 +85,11 @@ func NewSimpleTransaction(from string, to string, amount int) *Transaction{
 	}
 	txOutupts=append(txOutupts, txOutput) //追加到输出交易中
 	//输出（找零）
-	if amount<10{
-		txOutput =&TxOutput{10-amount,from}//找零，找回给自己
+	if money>amount{
+		txOutput =&TxOutput{money-amount,from}//找零，找回给自己
 		txOutupts=append(txOutupts, txOutput) //再把这笔交易追加到输出交易中
+	}else{
+		log.Panicf("余额不足...\n")
 	}
 	tx:=Transaction{nil,txInputs,txOutupts}
 	tx.HashTransaction()
