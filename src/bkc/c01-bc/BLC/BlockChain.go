@@ -272,12 +272,12 @@ func (blockchain *BlockChain) SpentOutpts(address string) map[string][]int {
 		1.先遍历一次区块链数据库，将所有自己花费的OUTPUT存入一个缓存
 		2.再次遍历区块链数据库，检查每一个VOUT是否包含在前面的已花费的缓存中
  */
-func(blockchain *BlockChain) UnUTXOS(address string) []*TxOutput{//整条链可能会有多个，所以要数组
+func(blockchain *BlockChain) UnUTXOS(address string) []*UTXO{//整条链可能会有多个，所以要数组
 	//1.遍历数据库，查找所有与address相关的交易
 	//获取迭代器
 	bcit:=blockchain.Iterator()
 	//当前地址的未花费输出列表
-	var unUTXOS []*TxOutput
+	var unUTXOS []*UTXO
 	//获取指定地址所有已花费输出，得到改地址的所有的input
 	spentTXOutputs:=blockchain.SpentOutpts(address)
 	//迭代，不断获取下一个区块
@@ -307,11 +307,13 @@ func(blockchain *BlockChain) UnUTXOS(address string) []*TxOutput{//整条链可�
 							}
 						}
 						if isSpentOutput==false{
-							unUTXOS=append(unUTXOS,vout)
+							utxo:=&UTXO{tx.TxHash,index,vout}
+							unUTXOS=append(unUTXOS,utxo)
 						}
 					}else{//如果长度为0，表示没有找到output信息，就表示他没花过钱
 						//将当前地址所有输出都添加到未花费输出中
-						unUTXOS=append(unUTXOS,vout)
+						utxo:=&UTXO{tx.TxHash,index,vout}
+						unUTXOS=append(unUTXOS,utxo)
 					}
 				}
 			}
@@ -334,7 +336,7 @@ func (blockchain *BlockChain) getBalance (address string) int{
 	var amount int
 	utxos:=blockchain.UnUTXOS(address)
 	for _, utxo := range utxos{
-		amount+=utxo.Value
+		amount+=utxo.Output.Value
 	}
 	return  amount
 }
