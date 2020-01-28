@@ -1,10 +1,5 @@
 package main
 
-import (
-	"bkc/c01-bc/BLC"
-	"fmt"
-)
-
 func main(){
 
 	//bc:=BLC.CreateBlockCHainWithGenesisBlock()
@@ -15,13 +10,13 @@ func main(){
 	//
 	//bc.PrintChain()
 
-	//cli:=BLC.CLI{}
-	//cli.Run()
+	cli:=BLC.CLI{}
+	cli.Run()
 
-	result:=BLC.Base58Encode([]byte("this is the example"))
-	fmt.Printf("result:%s\n",result)
-
-	decodeResult:=BLC.Base58Decode([]byte("NK2smnfSzALMcNJ8YHsxUJMrfN"))
-	fmt.Printf("decode result:%s\n",decodeResult)
+	//result:=BLC.Base58Encode([]byte("this is the example"))
+	//fmt.Printf("result:%s\n",result)
+	//
+	//decodeResult:=BLC.Base58Decode([]byte("NK2smnfSzALMcNJ8YHsxUJMrfN"))
+	//fmt.Printf("decode result:%s\n",decodeResult)
 
 }

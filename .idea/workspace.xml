@@ -2,10 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="41dd9106-37c3-4b6a-98af-dcbaf8b5cb53" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/base58.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/Wallet.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/Wallet_test.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/go_build_main_go" beforeDir="false" afterPath="$PROJECT_DIR$/bin/go_build_main_go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bkc/c01-bc/bc" beforeDir="false" afterPath="$PROJECT_DIR$/src/bkc/c01-bc/bc" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/bkc/c01-bc/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/bkc/c01-bc/main.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/.gitignore" afterDir="false" />
@@ -116,7 +115,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Go Build.go build main.go">
+  <component name="RunManager" selected="Go Test.TestNewWallt in bkc/c01-bc/BLC">
     <configuration default="true" type="GoApplicationRunConfiguration" factoryName="Go Application">
       <module name="163project" />
       <working_directory value="$PROJECT_DIR$/src/bkc/c01-bc" />
@@ -132,15 +131,6 @@
       <working_directory value="$PROJECT_DIR$/src/bkc/c01-bc" />
       <kind value="FILE" />
       <filePath value="$PROJECT_DIR$/src/bkc/c01-bc/BLC/BlockChain.go" />
-      <directory value="$PROJECT_DIR$/" />
-      <output_directory value="$PROJECT_DIR$/bin" />
-      <method v="2" />
-    </configuration>
-    <configuration name="go build Block.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
-      <module name="163project" />
-      <working_directory value="$PROJECT_DIR$/src/bkc/c01-bc" />
-      <kind value="FILE" />
-      <filePath value="$PROJECT_DIR$/src/bkc/c01-bc/BLC/Block.go" />
       <directory value="$PROJECT_DIR$/" />
       <output_directory value="$PROJECT_DIR$/bin" />
       <method v="2" />
@@ -172,13 +162,24 @@
       <output_directory value="$PROJECT_DIR$/bin" />
       <method v="2" />
     </configuration>
+    <configuration name="TestNewWallt in bkc/c01-bc/BLC" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="163project" />
+      <working_directory value="$PROJECT_DIR$/src/bkc/c01-bc/BLC" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="bkc/c01-bc/BLC" />
+      <directory value="$PROJECT_DIR$/" />
+      <filePath value="$PROJECT_DIR$/" />
+      <pattern value="^TestNewWallt$" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Go Test.TestNewWallt in bkc/c01-bc/BLC" />
         <item itemvalue="Go Build.go build main.go" />
         <item itemvalue="Go Build.go build BlockChain.go" />
         <item itemvalue="Go Build.go build channel.go" />
         <item itemvalue="Go Build.go build boltdb.go" />
-        <item itemvalue="Go Build.go build Block.go" />
       </list>
     </recent_temporary>
   </component>
