@@ -30,6 +30,7 @@ func IntToHex(data int64)[]byte{
 //标准JSON格式转切片
 //Mac Terminal格式：
 //./bc send -from '["ron","amy"]' -to '["aaron","norton"]' -amount '["20","10"]'
+//./bc send -from '["ron","amy"]' -to '["amy","ron"]' -amount '["5","2"]'
 // ./bc send -from '["ron"]' -to '["aaron"]' -amount '["3"]'
 //Windows格式：
 // bc.exe send -from "[\"ron\"]" to "[\"aaron\"]" -amount "[\"100\"]"

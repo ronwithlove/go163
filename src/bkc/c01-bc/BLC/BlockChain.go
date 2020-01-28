@@ -193,11 +193,15 @@ func(blockchain *BlockChain) MineNewBlock(from, to , amount []string){
 	var block *Block
 	//搁置交易生成步骤
 	var txs []*Transaction
-	value,_:=strconv.Atoi(amount[0])//转成int
-	//生成新的交易
-	tx:=NewSimpleTransaction(from[0],to[0],value,blockchain)
-	//最加到txs的交易列表中去
-	txs=append(txs,tx)
+	//遍历交易的参与者
+	for index,address:=range from{
+		value,_:=strconv.Atoi(amount[index])//转成int
+		//生成新的交易
+		tx:=NewSimpleTransaction(address,to[index],value,blockchain,txs)
+		//最加到txs的交易列表中去
+		txs=append(txs,tx)
+	}
+
 	//从数据库中获取最新的一个区块
 	blockchain.DB.View(func(tx *bolt.Tx) error {
 		b:=tx.Bucket([]byte(blockTableName))
@@ -393,7 +397,7 @@ func(blockchain *BlockChain) UnUTXOS(address string,txs []*Transaction) []*UTXO{
 //查询余额
 func (blockchain *BlockChain) getBalance (address string) int{
 	var amount int
-	utxos:=blockchain.UnUTXOS(address)
+	utxos:=blockchain.UnUTXOS(address,[]*Transaction{})//这里不需要用到交易缓存，随便给个空的。
 	for _, utxo := range utxos{
 		amount+=utxo.Output.Value
 	}

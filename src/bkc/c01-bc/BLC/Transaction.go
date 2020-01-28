@@ -52,12 +52,12 @@ func (tx *Transaction) HashTransaction(){
 }
 
 //生成普通转账交易
-func NewSimpleTransaction(from string, to string, amount int,bc *BlockChain) *Transaction{
+func NewSimpleTransaction(from string, to string, amount int,bc *BlockChain,txs []*Transaction) *Transaction{
 	var txInputs []*TxInput
 	var txOutupts []*TxOutput
 
 	//调用可花费UTXO函数
-	money,spendableUTXODic:=bc.FindSpendableUTXO(from,amount)
+	money,spendableUTXODic:=bc.FindSpendableUTXO(from,amount,txs)
 	fmt.Printf("money:%v\n",money)
 	//输入
 	for txHash,indexArray:=range spendableUTXODic{

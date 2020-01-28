@@ -14,5 +14,9 @@ func (cli *CLI) send(from, to , amount []string){
 	//获取区块链对象
 	blockchain:=BlockchainObject()
 	defer blockchain.DB.Close()
+	if len(from)!=len(to)||len(from)!=len(amount){
+		fmt.Println("交易参数输入有误，请检查一致性...")
+		os.Exit(1)
+	}
 	blockchain.MineNewBlock(from, to , amount)
 }
