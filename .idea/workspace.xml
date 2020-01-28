@@ -2,13 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="41dd9106-37c3-4b6a-98af-dcbaf8b5cb53" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/base58.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/BlockChain.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/BlockChain.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/CLI_Send.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/CLI_Send.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/Transaction.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/Transaction.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/utils.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/utils.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/go_build_main_go" beforeDir="false" afterPath="$PROJECT_DIR$/bin/go_build_main_go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/bkc/c01-bc/bc" beforeDir="false" afterPath="$PROJECT_DIR$/src/bkc/c01-bc/bc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bkc/c01-bc/block.db" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bkc/c01-bc/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/bkc/c01-bc/main.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/LICENSE" afterDir="false" />
@@ -118,7 +116,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Go Build.go build BlockChain.go">
+  <component name="RunManager" selected="Go Build.go build main.go">
     <configuration default="true" type="GoApplicationRunConfiguration" factoryName="Go Application">
       <module name="163project" />
       <working_directory value="$PROJECT_DIR$/src/bkc/c01-bc" />
@@ -176,9 +174,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Go Build.go build main.go" />
         <item itemvalue="Go Build.go build BlockChain.go" />
         <item itemvalue="Go Build.go build channel.go" />
-        <item itemvalue="Go Build.go build main.go" />
         <item itemvalue="Go Build.go build boltdb.go" />
         <item itemvalue="Go Build.go build Block.go" />
       </list>
