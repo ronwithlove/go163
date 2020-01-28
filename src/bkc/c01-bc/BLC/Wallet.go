@@ -63,19 +63,19 @@ func Ripemd160Hash(pubKey []byte) []byte{
 func CheckSum(input []byte)[]byte{
 	first_hash:=sha256.Sum256(input)
 	second_hash:=sha256.Sum256(first_hash[:])
-	return second_hash[:addressCheckSumLen]
+	return second_hash[:addressCheckSumLen]//返回双哈希后的前4位
 }
 
 //通过钱包（公钥）获取地址
 func (w *Wallet) GetAddress() []byte{
 	//1.获取hash160
-	ripemd160Hash:=Ripemd160Hash(w.PublicKey)
+	ripemd160Hash:=Ripemd160Hash(w.PublicKey)//把公钥ripemd160一下长度20
 	//2.获取校验和
 	checkSumBytes:=CheckSum(ripemd160Hash)
 	//3.地址组成成员拼接
-	addressBytes:=append(ripemd160Hash,checkSumBytes...)
+	addressBytes:=append(ripemd160Hash,checkSumBytes...)//把ripedmd160和自己双哈希后的前4位合并
 	//4.base58编码
-	b58Bytes:=Base58Encode(addressBytes)//自带把verson里的1拼接上来了
+	b58Bytes:=Base58Encode(addressBytes)//再base58一下，自带把verson里的1拼接上来了
 	return b58Bytes
 }
 
