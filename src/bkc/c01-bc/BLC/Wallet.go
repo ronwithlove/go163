@@ -1,13 +1,19 @@
 package BLC
 
 import (
+	"bytes"
 	"crypto/ecdsa"
 	"crypto/elliptic"
 	"crypto/rand"
+	"crypto/sha256"
+	"golang.org/x/crypto/ripemd160"
 	"log"
 )
 
 //钱包管理相关文件
+//校验和长度
+const addressCheckSumLen=4
+
 
 //钱包基本结构
 type Wallet struct{
@@ -24,7 +30,7 @@ func NewWallt() *Wallet{
 	return &Wallet{privateKey,publicKey}
 }
 
-//通过钱包生产公钥-私钥对
+//通过钱包生成公钥,私钥对
 func newKeyPair()(ecdsa.PrivateKey,[]byte){
 	//1.获取一个椭圆
 	curve:=elliptic.P256()
@@ -38,3 +44,54 @@ func newKeyPair()(ecdsa.PrivateKey,[]byte){
 	return *priv,pubKey
 }
 
+
+//生成地址
+
+//实现双哈希
+func Ripemd160Hash(pubKey []byte) []byte{
+	//1.sha245
+	hash256:=sha256.New()
+	hash256.Write(pubKey)
+	hash:=hash256.Sum(nil)
+	//2.ripemd160
+	rmd160:=ripemd160.New()
+	rmd160.Write(hash)
+	return rmd160.Sum(nil)
+}
+
+//生成校验和
+func CheckSum(input []byte)[]byte{
+	first_hash:=sha256.Sum256(input)
+	second_hash:=sha256.Sum256(first_hash[:])
+	return second_hash[:addressCheckSumLen]
+}
+
+//通过钱包（公钥）获取地址
+func (w *Wallet) GetAddress() []byte{
+	//1.获取hash160
+	ripemd160Hash:=Ripemd160Hash(w.PublicKey)
+	//2.获取校验和
+	checkSumBytes:=CheckSum(ripemd160Hash)
+	//3.地址组成成员拼接
+	addressBytes:=append(ripemd160Hash,checkSumBytes...)
+	//4.base58编码
+	b58Bytes:=Base58Encode(addressBytes)//自带把verson里的1拼接上来了
+	return b58Bytes
+}
+
+//判读地址有效性
+func IsValidForAddress(addressBytes []byte)bool{
+	//1.地址通过base58Decode 进行解码（长度24）
+	pubkey_checkSumByte:=Base58Decode(addressBytes)
+	//2.拆分，进行校验和校验
+	checkSumBytes:=pubkey_checkSumByte[len(pubkey_checkSumByte)-addressCheckSumLen:]//取长度24-4=20开始的后满四位21-24
+	//传入ripemdhash160，生成校验和
+	ripemd160hash:=pubkey_checkSumByte[:len(pubkey_checkSumByte)-addressCheckSumLen]//取长度1-20
+	//3.生成
+	checkBytes:=CheckSum(ripemd160hash)
+	//4.比较
+	if bytes.Compare(checkSumBytes,checkBytes)==0{
+		return  true
+	}
+	return false
+}
