@@ -19,8 +19,6 @@ type CLI struct {
 //用法展示
 func PrintUsage(){
 	fmt.Println("Usage: \n")
-	fmt.Println("\tcreatewallet -- 创建钱包 ")
-
 	//初始化区块链
 	fmt.Printf("\tcreateblockchain -address address -- 创建区块链\n")
 	//添加区块
@@ -35,8 +33,10 @@ func PrintUsage(){
 	fmt.Printf("\t\t-AMOUNT amount -- 转账金额\n")
 	//查询余额
 	fmt.Printf("\tgetbalance -address FROM -- 查询指定地址的余额\n")
-	fmt.Printf("\t查询余额参数说明\n")
-	fmt.Printf("\t\t-address -- 查询余额的地址\n")
+	fmt.Printf("\t查询余额参数说明：\n")
+	fmt.Printf("\t-address -- 查询余额的地址\n")
+	fmt.Println("\tcreatewallet -- 创建钱包 ")
+	fmt.Println("\taccounts -- 获取钱包地址 ")
 }
 
 
@@ -61,8 +61,10 @@ func (cli *CLI)Run(){
 	//新建相关命令
 	//添加区块
 	addBlockCmd:=flag.NewFlagSet("addblock",flag.ExitOnError)
+	//创建钱包
 	createWalletCmd:=flag.NewFlagSet("createwallet",flag.ExitOnError)
-
+	//获取地址列表
+	getAccountsCmd:=flag.NewFlagSet("accounts",flag.ExitOnError)
 	//输出区块链完整信息
 	printChainCmd:=flag.NewFlagSet("printchain",flag.ExitOnError)
 	//创建区块链
@@ -85,6 +87,11 @@ func (cli *CLI)Run(){
 	flagGetBalanceArg:=getBalanceCmd.String("address","","要查询的地址")
 	//判断命令
 	switch os.Args[1] {//判断第二个命令
+	case "accounts":
+		err:=getAccountsCmd.Parse(os.Args[2:])
+		if err!=nil{
+			log.Printf("parse cmd of get account fialed! %v\n",err)
+		}
 	case "createwallet":
 		err:=createWalletCmd.Parse(os.Args[2:])
 		if err!=nil{
@@ -122,6 +129,11 @@ func (cli *CLI)Run(){
 
 	}
 
+	//获取地址列表
+	if getAccountsCmd.Parsed(){
+		cli.GetAccounts()
+	}
+	//创建钱包
 	if createWalletCmd.Parsed(){
 		cli.CreateWallets()
 	}
