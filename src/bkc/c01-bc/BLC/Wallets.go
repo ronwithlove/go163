@@ -21,7 +21,7 @@ type Wallets struct{
 }
 
 //初始化钱包集合
-func NewWallets() *Wallets{
+func NewWallets() (*Wallets){
 	//从钱包文件中获取钱包信息
 	//1.先判断文件是否存在
 	if _,err:=os.Stat(walletFile);os.IsNotExist(err){
@@ -29,13 +29,13 @@ func NewWallets() *Wallets{
 		wallets.Wallets=make(map[string]*Wallet)
 		return wallets
 	}
+
+	var wallets Wallets
 	//2.文件存在，读取内容
 	fileContent,err:=ioutil.ReadFile(walletFile)
 	if nil!=err{
 		log.Panicf("read the file content failed! %v\n",err)
 	}
-
-	var wallets Wallets
 	gob.Register(elliptic.P256())
 	decoder:=gob.NewDecoder(bytes.NewReader(fileContent))
 	err=decoder.Decode(&wallets)
@@ -65,7 +65,7 @@ func(w*Wallets) SaveWallets(){
 	if nil!=err{
 		log.Printf("encode the struct of wallets failed %v\n",err)
 	}
-	err=ioutil.WriteFile(walletFile,nil,0644)
+	err=ioutil.WriteFile(walletFile,content.Bytes(),0644)
 	if nil!=err{
 		log.Panicf("write the content of wallet into file [%s] failed! %v\n",walletFile,err)
 	}
