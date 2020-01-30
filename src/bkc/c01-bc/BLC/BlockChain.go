@@ -143,12 +143,13 @@ func (bc *BlockChain) PrintChain(){
 			for _, vin:= range tx.Vins{
 				fmt.Printf("\t\t\tvin-txHash : %x\n",vin.TxHash)
 				fmt.Printf("\t\t\tprevious vout index: %x\n",vin.Vout)
-				fmt.Printf("\t\t\tvin-scriptSig : %v\n",vin.ScriptSig)
+				fmt.Printf("\t\t\tvin-PublicKey : %x\n",vin.PublicKey)
+				fmt.Printf("\t\t\tvin-Signature : %x\n",vin.Signature)
 			}
 			fmt.Printf("\t\t输出...\n")
 			for _, vout:=range tx.Vouts {
 				fmt.Printf("\t\t\tout-value:%d\n",vout.Value)
-				fmt.Printf("\t\t\tout-scriptPubkey:%v\n",vout.ScriptPubkey)
+				fmt.Printf("\t\t\tout-Ripemd160Hash:%x\n",vout.Ripemd160Hash)
 
 			}
 		}
@@ -247,12 +248,20 @@ func (blockchain *BlockChain) SpentOutpts(address string) map[string][]int {
 			//排除coinbase交易
 			if!tx.IsCoinbaseTransaction(){
 				for _, in:=range tx.Vins{//一个交易里会有多个input
-					if in.CheckPubkeyWithAddress(address){}
-					key:=hex.EncodeToString(in.TxHash)//交易哈希转成string保存，作为key
-					//添加到已花费输出的缓存中
-					spentTXOutputs[key]= append(spentTXOutputs[key], in.Vout)
-					//在一个Input中某个人可能有多条记录in.Vout(index,引用上一笔交易的输出索引号)
-					//保存在以哈希为key,value是int的数组中
+					if in.UnLockRipemd160Hash(StringToHash160(address)){
+						key:=hex.EncodeToString(in.TxHash)//交易哈希转成string保存，作为key
+						//添加到已花费输出的缓存中
+						spentTXOutputs[key]= append(spentTXOutputs[key], in.Vout)
+						//在一个Input中某个人可能有多条记录in.Vout(index,引用上一笔交易的输出索引号)
+						//保存在以哈希为key,value是int的数组中
+					}
+					//if in.CheckPubkeyWithAddress(address){
+					//	key:=hex.EncodeToString(in.TxHash)//交易哈希转成string保存，作为key
+					//	//添加到已花费输出的缓存中
+					//	spentTXOutputs[key]= append(spentTXOutputs[key], in.Vout)
+					//	//在一个Input中某个人可能有多条记录in.Vout(index,引用上一笔交易的输出索引号)
+					//	//保存在以哈希为key,value是int的数组中
+					//}
 				}
 			}
 		}
@@ -291,11 +300,16 @@ func(blockchain *BlockChain) UnUTXOS(address string,txs []*Transaction) []*UTXO{
 		if!tx.IsCoinbaseTransaction(){
 			for _,in:=range tx.Vins{
 				//判断用户
-				if in.CheckPubkeyWithAddress(address){
+				if in.UnLockRipemd160Hash(StringToHash160(address)){
 					//添加到已花费输出的map中
 					key:=hex.EncodeToString(in.TxHash)
 					spentTXOutputs[key]=append(spentTXOutputs[key],in.Vout)
 				}
+				//if in.CheckPubkeyWithAddress(address){
+				//	//添加到已花费输出的map中
+				//	key:=hex.EncodeToString(in.TxHash)
+				//	spentTXOutputs[key]=append(spentTXOutputs[key],in.Vout)
+				//}
 			}
 		}
 	}
@@ -304,7 +318,8 @@ func(blockchain *BlockChain) UnUTXOS(address string,txs []*Transaction) []*UTXO{
 		//添加一个缓存输出的跳转
 		WorkCacheTx:
 		for index,vout:=range tx.Vouts{
-			if vout.CheckPubkeyWithAddress(address){
+			if vout.UnLockScriptPubkeyWithAddress(address){
+			//if vout.CheckPubkeyWithAddress(address){
 				if len(spentTXOutputs)!=0{
 					var isUtxoTx bool //判断交易是否被其他交易引用
 					for txHash, indexArray:=range spentTXOutputs{
@@ -353,7 +368,8 @@ func(blockchain *BlockChain) UnUTXOS(address string,txs []*Transaction) []*UTXO{
 			for index,vout:=range tx.Vouts{//每个交易有多个output(tx中output是数组)
 				//index：当前输出在当前交易的中索引位置
 				//vout:当前输出
-				if vout.CheckPubkeyWithAddress(address){
+				if vout.UnLockScriptPubkeyWithAddress(address){
+				//if vout.CheckPubkeyWithAddress(address){
 					//当前vout属于传入地址
 					if len(spentTXOutputs)!=0{
 						var isSpentOutput bool//默认就是false

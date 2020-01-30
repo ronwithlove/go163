@@ -24,10 +24,10 @@ type Transaction struct{
 //实现coinbase交易
 func NewCoinbaseTransaction(address string) *Transaction{
 	//输入,txHash为nil,这里的索引用-1，挖坑没有人就用system reward
-	txInput:=&TxInput{[]byte{},-1,"system reward"}
+	txInput:=&TxInput{[]byte{},-1,nil,nil}
 	//输出,value暂定给10,address
-	txOutput:=&TxOutput{10,address}
-
+	//txOutput:=&TxOutput{10,StringToHash160(address)}
+	txOutput:=NewTxOutput(10,address)
 	txCoinbase:=&Transaction{
 		nil,
 		[]*TxInput{txInput},
@@ -59,6 +59,11 @@ func NewSimpleTransaction(from string, to string, amount int,bc *BlockChain,txs 
 	//调用可花费UTXO函数
 	money,spendableUTXODic:=bc.FindSpendableUTXO(from,amount,txs)
 	fmt.Printf("money:%v\n",money)
+	//获取钱包集合对象
+	wallets:=NewWallets()
+	//查找对应的钱包结构
+	wallet:=wallets.Wallets[from]
+
 	//输入
 	for txHash,indexArray:=range spendableUTXODic{
 		txHashesBytes,err:=hex.DecodeString(txHash)
@@ -67,26 +72,22 @@ func NewSimpleTransaction(from string, to string, amount int,bc *BlockChain,txs 
 		}
 		//遍历索引列表
 		for _, index:=range indexArray{
-			txInput:=&TxInput{txHashesBytes,index,from}
+			txInput:=&TxInput{txHashesBytes,index,nil,wallet.PublicKey}
 			txInputs=append(txInputs,txInput)
 		}
 	}
-	//txInput:=&TxInput{
-	//	TxHash:    []byte("d8e4a7d4a751428d9cd468ad539386253ab31fe4dc7aca05cbca9a74e3cc60ac"),
-	//	Vout:      0,
-	//	ScriptSig: from,
-	//}
-	//txInputs= append(txInputs, txInput)//追加到输入交易中
 
 	//输出
-	txOutput :=&TxOutput{
-		Value:        amount,
-		ScriptPubkey: to,
-	}
+	//txOutput :=&TxOutput{
+	//	Value:        amount,
+	//	ScriptPubkey: to,
+	//}
+	txOutput:=NewTxOutput(amount,to)
 	txOutupts=append(txOutupts, txOutput) //追加到输出交易中
 	//输出（找零）
 	if money>amount{
-		txOutput =&TxOutput{money-amount,from}//找零，找回给自己
+		//txOutput =&TxOutput{money-amount,from}//找零，找回给自己
+		txOutput=NewTxOutput(money-amount,from)//找零，找回给自己
 		txOutupts=append(txOutupts, txOutput) //再把这笔交易追加到输出交易中
 	}else{
 		log.Panicf("余额不足...\n")

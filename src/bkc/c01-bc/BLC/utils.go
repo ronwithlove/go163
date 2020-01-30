@@ -42,3 +42,10 @@ func JSONToSlice(jsonString string)[]string{
 	}
 	return  strSlice
 }
+
+//string to hash160
+func StringToHash160(address string)[]byte{
+	pubKeyHash:=Base58Decode([]byte(address))
+	hash160:=pubKeyHash[:len(pubKeyHash)-addressCheckSumLen]
+	return hash160
+}
