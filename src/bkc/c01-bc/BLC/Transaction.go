@@ -2,6 +2,7 @@ package BLC
 
 import (
 	"bytes"
+	"crypto/ecdsa"
 	"crypto/sha256"
 	"encoding/gob"
 	"encoding/hex"
@@ -93,7 +94,9 @@ func NewSimpleTransaction(from string, to string, amount int,bc *BlockChain,txs 
 		log.Panicf("余额不足...\n")
 	}
 	tx:=Transaction{nil,txInputs,txOutupts}
-	tx.HashTransaction()
+	tx.HashTransaction()//完整的交易生成
+	//对交易进行签名
+	bc.SignTransaction(&tx)
 	return &tx
 }
 
@@ -101,4 +104,11 @@ func NewSimpleTransaction(from string, to string, amount int,bc *BlockChain,txs 
 //判断指定的交易是否是一个coinbase交易
 func (tx *Transaction) IsCoinbaseTransaction() bool{
 	return  tx.Vins[0].Vout==-1 && len(tx.Vins[0].TxHash)==0//满足&&前一个判断也就是coinbase交易了
+}
+
+//交易签名
+func (tx *Transaction)Sign(){
+
+	//调用核心签名函数
+	ecdsa.Sign(nil,nil,nil)
 }

@@ -447,3 +447,15 @@ func(blockchain * BlockChain) FindSpendableUTXO(from string, amount int,txs[]*Tr
 	}
 	return value, spendableUTXO
 }
+
+//交易签名
+func (blockchain *BlockChain)SignTransaction (tx *Transaction){
+
+	//处理交易的input,查找tx中input所引用的vout 所属交易（查找发送者）
+	for _,vin:=range tx.Vins{
+		//查找当前交易输入所引用的交易
+		//vin.TxHash
+	}
+	//签名
+	tx.Sign()
+}

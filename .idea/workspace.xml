@@ -2,14 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="41dd9106-37c3-4b6a-98af-dcbaf8b5cb53" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/bkc/c01-bc/block.db" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/bkc/ctemp/main.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/BlockChain.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/BlockChain.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/Transaction.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/Transaction.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/Tx_Input.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/Tx_Input.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/Tx_Output.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/Tx_Output.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/utils.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/utils.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bkc/c01-bc/bc" beforeDir="false" afterPath="$PROJECT_DIR$/src/bkc/c01-bc/bc" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/LICENSE" afterDir="false" />
@@ -348,7 +344,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Go Test.TestWallets_CreateWallet in bkc/c01-bc/BLC">
+  <component name="RunManager" selected="Go Build.go build main.go (1)">
     <configuration default="true" type="GoApplicationRunConfiguration" factoryName="Go Application">
       <module name="163project" />
       <working_directory value="$PROJECT_DIR$/src/bkc/c01-bc" />
@@ -359,11 +355,11 @@
       <output_directory value="$PROJECT_DIR$/bin" />
       <method v="2" />
     </configuration>
-    <configuration name="go build BlockChain.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+    <configuration name="go build main.go (1)" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="163project" />
       <working_directory value="$PROJECT_DIR$/src/bkc/c01-bc" />
       <kind value="FILE" />
-      <filePath value="$PROJECT_DIR$/src/bkc/c01-bc/BLC/BlockChain.go" />
+      <filePath value="$PROJECT_DIR$/src/bkc/ctemp/main.go" />
       <directory value="$PROJECT_DIR$/" />
       <output_directory value="$PROJECT_DIR$/bin" />
       <method v="2" />
@@ -412,11 +408,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Go Build.go build main.go (1)" />
         <item itemvalue="Go Test.TestWallets_CreateWallet in bkc/c01-bc/BLC" />
         <item itemvalue="Go Test.TestWallet_GetAddress in bkc/c01-bc/BLC" />
         <item itemvalue="Go Build.go build main.go" />
         <item itemvalue="Go Test.TestNewWallt in bkc/c01-bc/BLC" />
-        <item itemvalue="Go Build.go build BlockChain.go" />
       </list>
     </recent_temporary>
   </component>
