@@ -1,6 +1,8 @@
 package BLC
 
 import (
+	"bytes"
+	"crypto/ecdsa"
 	"encoding/hex"
 	"fmt"
 	"github.com/boltdb/bolt"
@@ -448,14 +450,41 @@ func(blockchain * BlockChain) FindSpendableUTXO(from string, amount int,txs[]*Tr
 	return value, spendableUTXO
 }
 
+func (blockchain *BlockChain) FindTransaction(ID []byte)Transaction{
+	bcit:=blockchain.Iterator()
+	for{
+		block:=bcit.Next()
+		for _,tx:=range block.Txs{
+			if bytes.Compare(ID,tx.TxHash)==0{
+				//找到交易
+				return *tx
+			}
+		}
+		//退出
+		var hashInt big.Int
+		hashInt.SetBytes(block.PrevBlockHash)
+		if big.NewInt(0).Cmp(&hashInt)==0{
+			break
+		}//直接用height来比也一样吧
+	}
+	fmt.Printf("没有找到交易[%x]\n",ID)
+	return Transaction{}//就返一个空的
+}
 //交易签名
-func (blockchain *BlockChain)SignTransaction (tx *Transaction){
-
+func (blockchain *BlockChain)SignTransaction (tx *Transaction, pivKey ecdsa.PrivateKey){
+	//coinbase交易不需要签名
+	if tx.IsCoinbaseTransaction(){
+		return
+	}
 	//处理交易的input,查找tx中input所引用的vout 所属交易（查找发送者）
+	//对我们所花费的每一笔UTXO进行签名
+	//存储引用的交易
+	preTxs:=make(map[string]Transaction)
 	for _,vin:=range tx.Vins{
-		//查找当前交易输入所引用的交易
-		//vin.TxHash
+		//根据传入tx中的input里的哈希找到对应之前block里的交易，此处的交易tx非，这个方法传入的tx
+		tx:=blockchain.FindTransaction(vin.TxHash)
+		preTxs[hex.EncodeToString(tx.TxHash)]=tx//有可能会有很多个，放到字典里
 	}
 	//签名
-	tx.Sign()
+	tx.Sign(pivKey,preTxs)
 }

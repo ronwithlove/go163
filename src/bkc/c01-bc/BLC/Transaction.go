@@ -96,7 +96,7 @@ func NewSimpleTransaction(from string, to string, amount int,bc *BlockChain,txs 
 	tx:=Transaction{nil,txInputs,txOutupts}
 	tx.HashTransaction()//完整的交易生成
 	//对交易进行签名
-	bc.SignTransaction(&tx)
+	bc.SignTransaction(&tx,wallet.PrivateKey)
 	return &tx
 }
 
@@ -107,8 +107,9 @@ func (tx *Transaction) IsCoinbaseTransaction() bool{
 }
 
 //交易签名
-func (tx *Transaction)Sign(){
+//prevTxs:代表当前交易的输入所应用的所有OUTPUT所属的交易
+func (tx *Transaction)Sign(privateKey ecdsa.PrivateKey,prevTxs map[string]Transaction){
 
 	//调用核心签名函数
-	ecdsa.Sign(nil,nil,nil)
+	ecdsa.Sign(nil,&privateKey,nil)
 }
