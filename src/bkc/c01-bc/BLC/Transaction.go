@@ -3,6 +3,7 @@ package BLC
 import (
 	"bytes"
 	"crypto/ecdsa"
+	"crypto/rand"
 	"crypto/sha256"
 	"encoding/gob"
 	"encoding/hex"
@@ -107,9 +108,77 @@ func (tx *Transaction) IsCoinbaseTransaction() bool{
 }
 
 //交易签名
-//prevTxs:代表当前交易的输入所应用的所有OUTPUT所属的交易
+//prevTxs:代表当前交易的输入所引用的所有OUTPUT所属的交易
 func (tx *Transaction)Sign(privateKey ecdsa.PrivateKey,prevTxs map[string]Transaction){
+	//处理输入，保证交易的正确性
+	//检查当前交易tx中每一个Input的哈希是否能在前面的preTxs中找到（目测这里并不能解决双花）
+	//如果没有包含在里面，说明该交易被人修改了
+	for _,vin:=range tx.Vins{
+		if prevTxs[hex.EncodeToString(vin.TxHash)].TxHash==nil{
+			log.Panicf("ERROR:Prev transaction is not correct!\n")
+		}
+	}
+	//提取需要签名的属性
+	txCopy:=tx.TrimmedCopy()
+	//处理交易副本的输入
+	for vin_id, vin:=range txCopy.Vins{
+		//获取关联交易
+		prevTx:=prevTxs[hex.EncodeToString(vin.TxHash)]
+		//找到发送者(当前输入引用的哈希--输出的哈希)
+		//vin.Vout是交易Input里写的前交易内的index，这里使用原始的output做哈希
+		txCopy.Vins[vin_id].PublicKey=prevTx.Vouts[vin.Vout].Ripemd160Hash
+		//生成交易副本的哈希
+		txCopy.TxHash=txCopy.Hash()
+		//调用核心签名函数
+		r,s,err:=ecdsa.Sign(rand.Reader,&privateKey,txCopy.TxHash)
+		if nil!=err{
+			log.Printf("sign to transaction [%x] failed! %v\n",err)
+		}
 
-	//调用核心签名函数
-	ecdsa.Sign(nil,&privateKey,nil)
+		//组成交易签名
+		signature:=append(r.Bytes(),s.Bytes()...)
+		tx.Vins[vin_id].Signature=signature
+	}
+
+}
+
+//交易拷贝，生成一个专门用于交易签名的副本
+func(tx *Transaction) TrimmedCopy()Transaction{
+	//重新组装生成一个新的交易
+	var inputs []*TxInput
+	var outputs []*TxOutput
+	//组装input
+	for _, vin:=range tx.Vins{
+		inputs=append(inputs,&TxInput{vin.TxHash,vin.Vout,
+			nil,nil})
+	}
+	//组装output
+	for _,vout:=range tx.Vouts{
+		outputs=append(outputs,&TxOutput{vout.Value,vout.Ripemd160Hash})
+	}
+	txCopy:=Transaction{tx.TxHash,inputs,outputs}
+	return txCopy
+}
+
+
+//设置用于签名的交易的哈希
+func (tx *Transaction)Hash()[]byte{
+	txCopy :=tx
+	txCopy.TxHash=[]byte{}
+	//这里没有直接把tx.TxHash滞空，因为tx是引用指针的，会改变原有tx
+	hash:=sha256.Sum256(txCopy.Serialize())
+	return  hash[:]
+}
+
+//交易序列化
+func (tx *Transaction) Serialize() []byte  {
+
+	var buffer bytes.Buffer
+	encoder := gob.NewEncoder(&buffer)
+
+	err := encoder.Encode(tx)
+	if err != nil{
+		log.Panicf("serialize the tx to []byte failed! %v \n",err)
+	}
+	return buffer.Bytes()
 }

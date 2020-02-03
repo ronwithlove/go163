@@ -5,6 +5,8 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/BlockChain.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/BlockChain.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/Transaction.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/Transaction.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bkc/c01-bc/bc" beforeDir="false" afterPath="$PROJECT_DIR$/src/bkc/c01-bc/bc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bkc/c01-bc/block.db" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/LICENSE" afterDir="false" />

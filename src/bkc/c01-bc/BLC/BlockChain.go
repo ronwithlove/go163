@@ -476,12 +476,11 @@ func (blockchain *BlockChain)SignTransaction (tx *Transaction, pivKey ecdsa.Priv
 	if tx.IsCoinbaseTransaction(){
 		return
 	}
-	//处理交易的input,查找tx中input所引用的vout 所属交易（查找发送者）
-	//对我们所花费的每一笔UTXO进行签名
-	//存储引用的交易
+
 	preTxs:=make(map[string]Transaction)
+	//遍历当前交易里每一个input
 	for _,vin:=range tx.Vins{
-		//根据传入tx中的input里的哈希找到对应之前block里的交易，此处的交易tx非，这个方法传入的tx
+		//再遍历所有区块内的交易，把具有相同哈希的交易保存到preTxs中
 		tx:=blockchain.FindTransaction(vin.TxHash)
 		preTxs[hex.EncodeToString(tx.TxHash)]=tx//有可能会有很多个，放到字典里
 	}
