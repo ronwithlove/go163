@@ -218,7 +218,13 @@ func(blockchain *BlockChain) MineNewBlock(from, to , amount []string){
 		}
 		return nil
 	})
-	//通过数据库中最新的区块去生成更新的区块
+	//在这里进行交易签名的验证
+	//对txs中的每一笔交易签名都进行验证
+	for _,tx:=range txs{
+		//验证签名，只要有一笔签名的验证失败,panic
+		blockchain.VerifyTransaction(tx)
+	}
+	//通过数据库中最新的区块去生成更新的区块（交易的打包）
 	block=NewBlock(block.Heigth+1,block.Hash,txs)
 	//持计划新生成的区块到数据库中
 	blockchain.DB.Update(func(tx *bolt.Tx) error {
@@ -486,4 +492,12 @@ func (blockchain *BlockChain)SignTransaction (tx *Transaction, pivKey ecdsa.Priv
 	}
 	//签名
 	tx.Sign(pivKey,preTxs)
+}
+
+//验证签名
+func (bc *BlockChain)VerifyTransaction(tx *Transaction)bool{
+
+
+
+	return tx.Verify()
 }

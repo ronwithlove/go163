@@ -9,6 +9,7 @@ import (
 	"encoding/hex"
 	"fmt"
 	"log"
+	"math/big"
 )
 
 //交易管理文件
@@ -45,7 +46,7 @@ func (tx *Transaction) HashTransaction(){
 	var result bytes.Buffer
 	//设置编码对象
 	encoder:=gob.NewEncoder(&result)
-	if err:=encoder.Encode(tx);err!=nil{
+	if err:=encoder.Encode(tx);err!=nil{//tx
 		log.Panicf("tx Hash encoded failed %v\n",err)
 	}
 	//生成哈希值
@@ -95,7 +96,7 @@ func NewSimpleTransaction(from string, to string, amount int,bc *BlockChain,txs 
 		log.Panicf("余额不足...\n")
 	}
 	tx:=Transaction{nil,txInputs,txOutupts}
-	tx.HashTransaction()//完整的交易生成
+	tx.HashTransaction()//生产交易哈希
 	//对交易进行签名
 	bc.SignTransaction(&tx,wallet.PrivateKey)
 	return &tx
@@ -181,4 +182,12 @@ func (tx *Transaction) Serialize() []byte  {
 		log.Panicf("serialize the tx to []byte failed! %v \n",err)
 	}
 	return buffer.Bytes()
+}
+
+
+//验证签名
+func (tx *Transaction)Verify() bool{
+	//调用验证签名核心函数
+
+	return  ecdsa.Verify(nil,nil,big.NewInt(0),big.NewInt(0))
 }
