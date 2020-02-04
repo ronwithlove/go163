@@ -46,7 +46,7 @@ func CreateGenesisBlock(txs []*Transaction) *Block{
 	return NewBlock(1,nil,txs)//区块高度从1开始
 }
 
-//boltDB存储的键值对的数据类型都是字节数组。所以在存储区块前需要对区块进行序列化
+//boltDB存储的键值对的数据类型都是字节数组。所以在存储区块前需要对区块进行序列化，先转成字节数组[]byte
 func (block *Block) Serialize() []byte  {
 
 	var result bytes.Buffer

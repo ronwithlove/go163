@@ -203,6 +203,9 @@ func(blockchain *BlockChain) MineNewBlock(from, to , amount []string){
 		tx:=NewSimpleTransaction(address,to[index],value,blockchain,txs)
 		//最加到txs的交易列表中去
 		txs=append(txs,tx)
+		//给予交易的发起者（矿工）一定的奖励
+		tx=NewCoinbaseTransaction(address)
+		txs=append(txs,tx)
 	}
 
 	//从数据库中获取最新的一个区块
@@ -505,7 +508,7 @@ func (bc *BlockChain)VerifyTransaction(tx *Transaction)bool{
 	//查找输入引用的交易
 	for _,vin:=range tx.Vins{
 		tx:=bc.FindTransaction(vin.TxHash)
-		prevTxs[hex.EncodeToString(tx.TxHash)]=tx
+		prevTxs[hex.EncodeToString(tx.TxHash)]=tx//把哈希值转成string保存
 	}
 
 

@@ -11,6 +11,7 @@ import (
 	"fmt"
 	"log"
 	"math/big"
+	"time"
 )
 
 //交易管理文件
@@ -43,6 +44,7 @@ func NewCoinbaseTransaction(address string) *Transaction{
 }
 
 //生产交易哈希（交易序列化）
+//不同时间生成的交易哈希值不同
 func (tx *Transaction) HashTransaction(){
 	var result bytes.Buffer
 	//设置编码对象
@@ -50,8 +52,12 @@ func (tx *Transaction) HashTransaction(){
 	if err:=encoder.Encode(tx);err!=nil{//tx
 		log.Panicf("tx Hash encoded failed %v\n",err)
 	}
+	//添加时间戳表示，如果不添加所有coinbase交易完全相同
+	tm:=time.Now().UnixNano()
+	//用于生成哈希的原数据
+	txHashBytes:=bytes.Join([][]byte{result.Bytes(),IntToHex(tm)},[]byte{})
 	//生成哈希值
-	hash:=sha256.Sum256(result.Bytes())
+	hash:=sha256.Sum256(txHashBytes)
 	tx.TxHash=hash[:]
 }
 
@@ -203,14 +209,15 @@ func (tx *Transaction)Verify(prevTxs map[string]Transaction) bool{
 	//遍历tx输入，对每笔输入所引用的输出进行验证
 	for vinId, vin:=range tx.Vins{
 		//获取关联交易
-		prevTxs:=prevTxs[hex.EncodeToString((vin.TxHash))]
+		prevTx:=prevTxs[hex.EncodeToString((vin.TxHash))]
 		//找到发送者（当前输入引用的哈希--输出的哈希）
-		txCopy.Vins[vinId].PublicKey=prevTxs.Vouts[vin.Vout].Ripemd160Hash
+		txCopy.Vins[vinId].PublicKey=prevTx.Vouts[vin.Vout].Ripemd160Hash
 		//由需要验证的数据生成的交易哈希，必须要与签名时的数据完全一致
 		txCopy.TxHash=txCopy.Hash()
-		//在比特币中，签名是一堆数值对，r,s代表签名
+		//在比特币中，签名是一对数值对，r,s代表签名
 		//所以要从输入的signature中获取
 		//获取r,s。r,s长度相等
+		//私钥
 		r:=big.Int{}
 		s:=big.Int{}
 		sigLen:=len(vin.Signature)
