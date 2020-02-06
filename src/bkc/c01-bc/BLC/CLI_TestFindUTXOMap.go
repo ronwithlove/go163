@@ -7,3 +7,10 @@ func (cli *CLI) TestResetUTXO(){
 	utxoSet:=UTXOSet{Blockchain:blockchain}
 	utxoSet.ResetUTXOSet()
 }
+
+//重置
+
+//查找
+func(cli *CLI)TestFindUTXOMap(){
+
+}

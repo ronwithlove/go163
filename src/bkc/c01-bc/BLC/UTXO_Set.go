@@ -56,7 +56,7 @@ func (utxoSet *UTXOSet)ResetUTXOSet()  {
 			for keyHash, outputs:=range txOutputMap{
 				//将所有UTXO存入
 				txHash, _:=hex.DecodeString(keyHash)
-				fmt.Printf("txHash: %v\n",txHash)
+				fmt.Printf("txHash: %x\n",txHash)
 
 				//存入utxo talbe
 				err:=bucket.Put(txHash,outputs.Serilize())
