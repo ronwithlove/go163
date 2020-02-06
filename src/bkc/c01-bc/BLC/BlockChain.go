@@ -514,3 +514,12 @@ func (bc *BlockChain)VerifyTransaction(tx *Transaction)bool{
 
 	return tx.Verify(prevTxs)
 }
+
+//查找整条区块链中所有地址的UTXO
+func (blockchain *BlockChain) FindUTXOMap() map[string]*TxOutput{
+
+	//输出集合
+	utxoMaps:=make(map[string] *TxOutput)
+	return utxoMaps;
+
+}
