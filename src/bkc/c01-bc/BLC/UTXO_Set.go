@@ -1,6 +1,10 @@
 package BLC
 
 import (
+	"bytes"
+	"encoding/gob"
+	"encoding/hex"
+	"fmt"
 	"github.com/boltdb/bolt"
 	"log"
 )
@@ -15,6 +19,16 @@ type UTXOSet struct{
 	Blockchain *BlockChain
 }
 
+//序列化
+func (txOutputs *TXOutputs) Serilize()[]byte{
+	var result bytes.Buffer
+
+	encoder:=gob.NewEncoder(&result)
+	if err:=encoder.Encode(txOutputs);nil!=err{
+		log.Printf("serialize the utxo failed! %v\n",err)
+	}
+	return result.Bytes();
+}
 //更新
 
 //查找
@@ -39,6 +53,18 @@ func (utxoSet *UTXOSet)ResetUTXOSet()  {
 		if nil!=bucket{
 			//查找当前所有UTXO
 			txOutputMap:=utxoSet.Blockchain.FindUTXOMap();
+			for keyHash, outputs:=range txOutputMap{
+				//将所有UTXO存入
+				txHash, _:=hex.DecodeString(keyHash)
+				fmt.Printf("txHash: %v\n",txHash)
+
+				//存入utxo talbe
+				err:=bucket.Put(txHash,outputs.Serilize())
+				if nil!=err{
+					log.Printf("put the utxo into table failed! %v\n",err)
+				}
+			}
 		}
+		return nil
 	})
 }
