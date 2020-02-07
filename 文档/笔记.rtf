@@ -1,14 +1,97 @@
 {\rtf1\ansi\ansicpg936\cocoartf2511
-\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset134 PingFangSC-Regular;\f2\fnil\fcharset0 HelveticaNeue;
-\f3\fnil\fcharset0 Menlo-Regular;}
-{\colortbl;\red255\green255\blue255;\red33\green91\blue96;}
-{\*\expandedcolortbl;;\csgenericrgb\c12941\c35686\c37647;}
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset134 PingFangSC-Regular;\f1\fnil\fcharset0 HelveticaNeue-Bold;\f2\fnil\fcharset0 HelveticaNeue;
+\f3\fnil\fcharset0 Menlo-Regular;\f4\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;\red27\green31\blue34;\red255\green255\blue255;\red21\green23\blue26;
+\red244\green246\blue249;\red7\green68\blue184;\red203\green35\blue57;\red87\green96\blue106;\red6\green33\blue79;
+\red10\green77\blue204;\red33\green91\blue96;}
+{\*\expandedcolortbl;;\cssrgb\c14118\c16078\c18039;\cssrgb\c100000\c100000\c100000;\cssrgb\c10588\c12157\c13725\c4706;
+\cssrgb\c96471\c97255\c98039;\cssrgb\c0\c36078\c77255;\cssrgb\c84314\c22745\c28627;\cssrgb\c41569\c45098\c49020;\cssrgb\c1176\c18431\c38431;
+\cssrgb\c1176\c40000\c83922;\csgenericrgb\c12941\c35686\c37647;}
 \paperw11900\paperh16840\margl1440\margr1440\vieww17460\viewh13560\viewkind0
 \pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
 
-\f0\fs24 \cf0 \
+\f0\fs36 \cf0 \'ca\'b5\'cf\'d6\'d3\'e0\'b6\'ee\'b2\'e9\'d5\'d2\'b9\'a6\'c4\'dc\'d3\'c5\'bb\'af\
+1.\'ca\'fd\'be\'dd\'d4\'b4\'b4\'d3blockchain\'ca\'fd\'be\'dd\'b1\'ed\'b1\'e4\'b8\'fc\'ce\'aautxotable\'ca\'fd\'be\'dd\'b1\'ed\
+2.\'cd\'a8\'b9\'fdutxo table \'b2\'e9\'d5\'d2\'d6\'b8\'b6\'a8\'b5\'d8\'d6\'b7\'b5\'c4UTXO\
+\
+boltdb \'b5\'fc\'b4\'fa\'ca\'b9\'d3\'c3\'a3\'ba\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+{\field{\*\fldinst{HYPERLINK "https://github.com/boltdb/bolt#iterating-over-keys"}}{\fldrslt \cf0 bolt}}\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
 
-\f1\fs42 \'be\'df\'cc\'e5\'ca\'b5\'cf\'d6\'b2\'bd\'d6\'e8\
+\fs24 \cf0 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b\fs40 \cf2 \cb3 \expnd0\expndtw0\kerning0
+Iterating over keys\cb1 \
+
+\f2\b0\fs32 \cb3 Bolt stores its keys in byte-sorted order within a bucket. This makes sequential iteration over these keys extremely fast. To iterate over keys we'll use a 
+\f3\fs28 \cb4 Cursor
+\f2\fs32 \cb3 :\cb1 \
+
+\f3\fs28 \cb5 db.\cf6 View\cf2 (\cf7 func\cf2 (tx *bolt.Tx) \cf7 error\cf2  \{\
+	\cf8 // Assume bucket exists and has keys\cf2 \
+	b \cf7 :=\cf2  tx.\cf6 Bucket\cf2 ([]\cf7 byte\cf2 (\cf9 "MyBucket"\cf2 ))\
+\
+	c \cf7 :=\cf2  b.\cf6 Cursor\cf2 ()\
+\
+	\cf7 for\cf2  k, v \cf7 :=\cf2  c.\cf6 First\cf2 (); k != \cf6 nil\cf2 ; k, v = c.\cf6 Next\cf2 () \{\
+		fmt.\cf6 Printf\cf2 (\cf9 "key=\cf6 %s\cf9 , value=\cf6 %s\cf9 \\n"\cf2 , k, v)\
+	\}\
+\
+	\cf7 return\cf2  \cf6 nil\cf2 \
+\})\
+
+\f2\fs32 \cb3 The cursor allows you to move to a specific point in the list of keys and move forward or backward through the keys one at a time.\cb1 \
+\cb3 The following functions are available on the cursor:\cb1 \
+
+\f3\fs28 \cb5 First()  Move to the first key.\
+Last()   Move to the last key.\
+Seek()   Move to a specific key.\
+Next()   Move to the next key.\
+Prev()   Move to the previous key.\
+\
+
+\f2\fs32 \cb3 Each of those functions has a return signature of 
+\f3\fs28 \cb4 (key []byte, value []byte)
+\f2\fs32 \cb3 . When you have iterated to the end of the cursor then 
+\f3\fs28 \cb4 Next()
+\f2\fs32 \cb3  will return a 
+\f3\fs28 \cb4 nil
+\f2\fs32 \cb3  key. You must seek to a position using 
+\f3\fs28 \cb4 First()
+\f2\fs32 \cb3 , 
+\f3\fs28 \cb4 Last()
+\f2\fs32 \cb3 , or 
+\f3\fs28 \cb4 Seek()
+\f2\fs32 \cb3  before calling 
+\f3\fs28 \cb4 Next()
+\f2\fs32 \cb3  or 
+\f3\fs28 \cb4 Prev()
+\f2\fs32 \cb3 . If you do not seek to a position then these functions will return a 
+\f3\fs28 \cb4 nil
+\f2\fs32 \cb3  key.\cb1 \
+\cb3 During iteration, if the key is non-
+\f3\fs28 \cb4 nil
+\f2\fs32 \cb3  but the value is 
+\f3\fs28 \cb4 nil
+\f2\fs32 \cb3 , that means the key refers to a bucket rather than a value. Use 
+\f3\fs28 \cb4 Bucket.Bucket()
+\f2\fs32 \cb3  to access the sub-bucket.\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b \cf10 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\b0\fs28 \cf2 \cb5 \
+
+\f0\fs24 \cf0 \cb1 \kerning1\expnd0\expndtw0 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f4 \cf0 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs42 \cf0 \'be\'df\'cc\'e5\'ca\'b5\'cf\'d6\'b2\'bd\'d6\'e8\
 1.\'cc\'ed\'bc\'d3UTXOSet\'bd\'e1\'b9\'b9\
 2.\'cc\'ed\'bc\'d3\'d6\'d8\'d6\'c6utxo table\'b5\'c4\'b9\'a6\'c4\'dc\
 3.\'ca\'b5\'cf\'d6\'b2\'e9\'d5\'d2\'c7\'f8\'bf\'e9\'c1\'b4\'d6\'d0\'cb\'f9\'d3\'d0utxo\'b5\'c4\'b9\'a6\'c4\'dc\
@@ -23,24 +106,24 @@
 \fs42 \
 \
 \'ca\'b5\'cf\'d6\'cd\'da\'bf\'d3\'bd\'b1\'c0\'f8
-\f0\fs24 \
+\f4\fs24 \
 
 \fs32 1.
-\f1 \'c4\'ac\'c8\'cf\'c7\'e9\'bf\'f6\'cf\'c2\'a3\'ac\'cb\'ad\'b7\'a2\'c6\'f0\'bd\'bb\'d2\'d7\'a3\'ac\'cb\'ad\'b5\'c3\'b5\'bd\'bd\'b1\'c0\'f8\
+\f0 \'c4\'ac\'c8\'cf\'c7\'e9\'bf\'f6\'cf\'c2\'a3\'ac\'cb\'ad\'b7\'a2\'c6\'f0\'bd\'bb\'d2\'d7\'a3\'ac\'cb\'ad\'b5\'c3\'b5\'bd\'bd\'b1\'c0\'f8\
 2.\'d0\'de\'d5\'fd\'c7\'b0\'c3\'e6\'c9\'fa\'b2\'fa\'bd\'bb\'d2\'d7\'b9\'fe\'cf\'a3\'b5\'c4bug,\'cc\'ed\'bc\'d3\'c1\'cb\'ca\'b1\'bc\'e4\'b4\'c1\'d7\'f7\'ce\'aa\'b9\'fe\'cf\'a3\'b1\'ea\'ca\'b6
-\f0\fs24 \
+\f4\fs24 \
 \
 \
 \
 \pard\pardeftab560\partightenfactor0
 
-\f1\fs42 \cf0 \'bd\'bb\'d2\'d7\'c7\'a9\'c3\'fb\'d1\'e9\'d6\'a4\'b9\'a6\'c4\'dc\'ca\'b5\'cf\'d6\
+\f0\fs42 \cf0 \'bd\'bb\'d2\'d7\'c7\'a9\'c3\'fb\'d1\'e9\'d6\'a4\'b9\'a6\'c4\'dc\'ca\'b5\'cf\'d6\
 \pard\pardeftab560\slleading20\partightenfactor0
 
 \fs32 \cf0 1.\'d4\'da\'ca\'b2\'c3\'b4\'b5\'d8\'b7\'bd\'b6\'d4\'bd\'bb\'d2\'d7\'bd\'f8\'d0\'d0\'d1\'e9\'d6\'a4
 \f2  \
 	
-\f1 \'bd\'bb\'d2\'d7\'b1\'bb\'b4\'f2\'b0\'fc\'bd\'f8\'c8\'eb\'c7\'f8\'bf\'e9\'d6\'ae\'c7\'b0\'bd\'f8\'d0\'d0\'d1\'e9\'d6\'a4
+\f0 \'bd\'bb\'d2\'d7\'b1\'bb\'b4\'f2\'b0\'fc\'bd\'f8\'c8\'eb\'c7\'f8\'bf\'e9\'d6\'ae\'c7\'b0\'bd\'f8\'d0\'d0\'d1\'e9\'d6\'a4
 \fs42 \
 \pard\pardeftab560\partightenfactor0
 \cf0 \
@@ -51,38 +134,38 @@
 \pard\pardeftab560\slleading20\partightenfactor0
 
 \fs32 \cf0 1.
-\f1 \'d4\'da\'ca\'b2\'c3\'b4\'b5\'d8\'b7\'bd\'b6\'d4\'bd\'bb\'d2\'d7\'c7\'a9\'c3\'fb
+\f0 \'d4\'da\'ca\'b2\'c3\'b4\'b5\'d8\'b7\'bd\'b6\'d4\'bd\'bb\'d2\'d7\'c7\'a9\'c3\'fb
 \f2  \
 	
-\f1 \'d4\'da\'bd\'bb\'d2\'d7\'c9\'fa\'b3\'c9\'b5\'c4\'ca\'b1\'ba\'f2\'b6\'d4\'bd\'bb\'d2\'d7\'bd\'f8\'d0\'d0\'c7\'a9\'c3\'fb (
-\f3 \cf2 NewSimpleTransaction
-\f1 \cf0 )
+\f0 \'d4\'da\'bd\'bb\'d2\'d7\'c9\'fa\'b3\'c9\'b5\'c4\'ca\'b1\'ba\'f2\'b6\'d4\'bd\'bb\'d2\'d7\'bd\'f8\'d0\'d0\'c7\'a9\'c3\'fb (
+\f3 \cf11 NewSimpleTransaction
+\f0 \cf0 )
 \f2 \
 2.
-\f1 \'d4\'da\'ca\'b2\'c3\'b4\'b5\'d8\'b7\'bd\'b6\'d4\'bd\'bb\'d2\'d7\'bd\'f8\'d0\'d0\'d1\'e9\'d6\'a4
+\f0 \'d4\'da\'ca\'b2\'c3\'b4\'b5\'d8\'b7\'bd\'b6\'d4\'bd\'bb\'d2\'d7\'bd\'f8\'d0\'d0\'d1\'e9\'d6\'a4
 \f2  \
 	
-\f1 \'bd\'bb\'d2\'d7\'b1\'bb\'b4\'f2\'b0\'fc\'bd\'f8\'c8\'eb\'c7\'f8\'bf\'e9\'d6\'ae\'c7\'b0\'bd\'f8\'d0\'d0\'d1\'e9\'d6\'a4
+\f0 \'bd\'bb\'d2\'d7\'b1\'bb\'b4\'f2\'b0\'fc\'bd\'f8\'c8\'eb\'c7\'f8\'bf\'e9\'d6\'ae\'c7\'b0\'bd\'f8\'d0\'d0\'d1\'e9\'d6\'a4
 \f2 \
 3.
-\f1 \'ca\'c7\'b7\'f1\'d0\'e8\'d2\'aa\'b6\'d4\'bd\'bb\'d2\'d7\'d6\'d0\'cb\'f9\'d3\'d0\'ca\'f4\'d0\'d4\'bd\'f8\'d0\'d0\'c7\'a9\'c3\'fb\'ba\'cd\'d1\'e9\'d6\'a4\'a3\'a8\'c4\'c4\'d0\'a9\'ca\'f4\'d0\'d4\'d3\'d0\'b1\'d8\'d2\'aa\'bd\'f8\'d0\'d0\'c7\'a9\'c3\'fb\'a3\'a9\
+\f0 \'ca\'c7\'b7\'f1\'d0\'e8\'d2\'aa\'b6\'d4\'bd\'bb\'d2\'d7\'d6\'d0\'cb\'f9\'d3\'d0\'ca\'f4\'d0\'d4\'bd\'f8\'d0\'d0\'c7\'a9\'c3\'fb\'ba\'cd\'d1\'e9\'d6\'a4\'a3\'a8\'c4\'c4\'d0\'a9\'ca\'f4\'d0\'d4\'d3\'d0\'b1\'d8\'d2\'aa\'bd\'f8\'d0\'d0\'c7\'a9\'c3\'fb\'a3\'a9\
 
 \f2 \
 
-\f1 \'c0\'ed\'c2\'db\'cf\'e0\'b9\'d8
+\f0 \'c0\'ed\'c2\'db\'cf\'e0\'b9\'d8
 \f2 \
 
-\f1 \'bd\'bb\'d2\'d7\'bb\'f9\'b1\'be\'b8\'c5\'c4\'ee
+\f0 \'bd\'bb\'d2\'d7\'bb\'f9\'b1\'be\'b8\'c5\'c4\'ee
 \f2 \
 	
-\f1 \'bd\'bb\'d2\'d7\'ca\'b5\'bc\'ca\'c9\'cf\'be\'cd\'ca\'c7\'bd\'e2\'cb\'f8\'d6\'b8\'b6\'a8\'b5\'d8\'d6\'b7\'b5\'c4
+\f0 \'bd\'bb\'d2\'d7\'ca\'b5\'bc\'ca\'c9\'cf\'be\'cd\'ca\'c7\'bd\'e2\'cb\'f8\'d6\'b8\'b6\'a8\'b5\'d8\'d6\'b7\'b5\'c4
 \f2 output
-\f1 \'a3\'ac\'c8\'bb\'ba\'f3\'d6\'d8\'d0\'c2\'b7\'d6\'c5\'e4\'cb\'fb\'c3\'c7\'b5\'c4\'d6\'b5\'a3\'ac\'d4\'d9\'bc\'d3\'cb\'f8\'b5\'bd\'d0\'c2\'b5\'c4
+\f0 \'a3\'ac\'c8\'bb\'ba\'f3\'d6\'d8\'d0\'c2\'b7\'d6\'c5\'e4\'cb\'fb\'c3\'c7\'b5\'c4\'d6\'b5\'a3\'ac\'d4\'d9\'bc\'d3\'cb\'f8\'b5\'bd\'d0\'c2\'b5\'c4
 \f2 output
-\f1 \'d6\'d0
+\f0 \'d6\'d0
 \f2 \
 
-\f1 \'ce\'aa\'c1\'cb\'bd\'bb\'d2\'d7\'b0\'b2\'c8\'ab\'a3\'ac\'b1\'d8\'d0\'eb\'bc\'d3\'c3\'dc\'a3\'a8\'c7\'a9\'c3\'fb\'a3\'a9\'b5\'c4\'ca\'fd\'be\'dd\'c8\'e7\'cf\'c2\'a3\'ba\
+\f0 \'ce\'aa\'c1\'cb\'bd\'bb\'d2\'d7\'b0\'b2\'c8\'ab\'a3\'ac\'b1\'d8\'d0\'eb\'bc\'d3\'c3\'dc\'a3\'a8\'c7\'a9\'c3\'fb\'a3\'a9\'b5\'c4\'ca\'fd\'be\'dd\'c8\'e7\'cf\'c2\'a3\'ba\
 	1.\'b1\'a3\'b4\'e6\'d4\'da\'d2\'d1\'bd\'e2\'cb\'f8\'b5\'c4ouput\'d6\'d0\'b5\'c4\'b9\'ab\'d4\'bf\'b9\'fe\'cf\'a3\'a3\'ac\'b4\'fa\'b1\'ed\'bd\'bb\'d2\'d7\'b5\'c4\'b7\'a2\'cb\'cd\'d5\'df\
 	2.\'b1\'a3\'b4\'e6\'d4\'da\'d0\'c2\'c9\'fa\'b3\'c9\'b5\'c4ouput\'d6\'d0\'b5\'c4\'b9\'ab\'d4\'bf\'b9\'fe\'cf\'a3\'a3\'ac\'b4\'fa\'b1\'ed\'bd\'bb\'d2\'d7\'b5\'c4\'bd\'d3\'ca\'dc\'d5\'df\
 	3.\'d0\'c2\'c9\'fa\'b3\'c9\'b5\'c4output\'cb\'f9\'b0\'fc\'ba\'ac\'b5\'c4value\'a3\'acmsg\'ca\'b2\'c3\'b4\

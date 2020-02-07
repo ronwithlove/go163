@@ -19,7 +19,7 @@ type UTXOSet struct{
 	Blockchain *BlockChain
 }
 
-//序列化
+//序列化 txOutputs=>[]bytes
 func (txOutputs *TXOutputs) Serilize()[]byte{
 	var result bytes.Buffer
 
@@ -29,9 +29,50 @@ func (txOutputs *TXOutputs) Serilize()[]byte{
 	}
 	return result.Bytes();
 }
+
+//反序列化 []bytes=>txOutputs
+func DeserializeTXOutputs(txOutputsBytes []byte) *TXOutputs{
+	var txOutputs TXOutputs
+	decoder:=gob.NewDecoder(bytes.NewReader(txOutputsBytes))
+	if err:=decoder.Decode(&txOutputs);nil!=err{
+		log.Panicf("deserialize the struct utxo failed! %v\n",err)
+	}
+	return &txOutputs
+}
+
+
 //更新
 
 //查找
+func(utxoSet *UTXOSet)FindUTXOWithAddress(address string)[]*UTXO{
+	var utxos []*UTXO
+	err:=utxoSet.Blockchain.DB.View(func(tx *bolt.Tx) error {
+		//1.获取utxotable表
+		b:=tx.Bucket([]byte(utxoTableName))
+		if nil!=b{
+			c:=b.Cursor()//cursor--游标
+			//通过游标遍历boltdb数据库中的数据
+			for k,v:=c.First();k!=nil;k,v=c.Next(){
+				txOutputs:=DeserializeTXOutputs(v)//从数据库得到utxo
+				for _,utxo:=range txOutputs.TXOutputs{//遍历，看看是否匹配
+					if utxo.UnLockScriptPubkeyWithAddress(address){
+						utxo_signle:=UTXO{Output:utxo}
+						utxos=append(utxos, &utxo_signle)
+					}
+
+				}
+			}
+		}
+		return nil
+	})
+	if nil!=err{
+		log.Printf("find the utxo of [%s] failed! %v\n",address,err)
+	}
+	return utxos
+}
+
+
+
 
 //重制,把UTXO存到DB里
 func (utxoSet *UTXOSet)ResetUTXOSet()  {
