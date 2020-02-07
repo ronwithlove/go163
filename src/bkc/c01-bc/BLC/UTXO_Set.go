@@ -43,6 +43,22 @@ func DeserializeTXOutputs(txOutputsBytes []byte) *TXOutputs{
 
 //更新
 
+
+//查询余额
+func (utxoSet *UTXOSet) GetBalance(address string)int{
+	UTXOS:=utxoSet.FindUTXOWithAddress(address)
+	var amount int
+	for _, utxo:=range UTXOS{
+		fmt.Printf("utxo-txhash:%x\n",utxo.TxHash)
+		fmt.Printf("utxo-Index:%x\n",utxo.Index)
+		fmt.Printf("utxo-Ripemd160Hash:%x\n",utxo.Output.Ripemd160Hash)
+		fmt.Printf("utxo-Value:%x\n",utxo.Output.Value)
+		amount+=utxo.Output.Value
+	}
+	return  amount
+}
+
+
 //查找
 func(utxoSet *UTXOSet)FindUTXOWithAddress(address string)[]*UTXO{
 	var utxos []*UTXO
