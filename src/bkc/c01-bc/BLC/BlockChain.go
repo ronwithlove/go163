@@ -141,14 +141,14 @@ func (bc *BlockChain) PrintChain(){
 		fmt.Printf("\tTxs: %v\n",curBlock.Txs)
 		for _, tx:= range curBlock.Txs{
 			fmt.Printf("\t\ttx-hash: %x\n",tx.TxHash)
-			fmt.Printf("\t\t输入...\n")
+			fmt.Printf("\t\tInput 输入...\n")
 			for _, vin:= range tx.Vins{
 				fmt.Printf("\t\t\tvin-txHash : %x\n",vin.TxHash)
 				fmt.Printf("\t\t\tprevious vout index: %x\n",vin.Vout)
 				fmt.Printf("\t\t\tvin-PublicKey : %x\n",vin.PublicKey)
 				fmt.Printf("\t\t\tvin-Signature : %x\n",vin.Signature)
 			}
-			fmt.Printf("\t\t输出...\n")
+			fmt.Printf("\t\tOutput 输出...\n")
 			for _, vout:=range tx.Vouts {
 				fmt.Printf("\t\t\tout-value:%d\n",vout.Value)
 				fmt.Printf("\t\t\tout-Ripemd160Hash:%x\n",vout.Ripemd160Hash)
@@ -562,8 +562,8 @@ func (blockchain *BlockChain) FindUTXOMap() map[string]*TXOutputs{
 
 	for{
 		block:=bcit.Next()
-		txOutputs:=&TXOutputs{[]*TxOutput{}}
 		for _,tx:=range block.Txs{
+			txOutputs:=&TXOutputs{[]*TxOutput{}}
 			txHash:=hex.EncodeToString(tx.TxHash)
 			//获取每笔交易的vouts
 			WorkOutLoop:

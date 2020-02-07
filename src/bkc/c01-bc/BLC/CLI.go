@@ -92,7 +92,7 @@ func (cli *CLI)Run(){
 	//查询余额命令行参数
 	flagGetBalanceArg:=getBalanceCmd.String("address","","要查询的地址")
 	//UTXO测试命令行参数
-	flagUTXOArg:=UTXOTestCmd.String("metho","","UTXO Table相关操作\n")
+	flagUTXOArg:=UTXOTestCmd.String("method","","UTXO Table相关操作\n")
 	//判断命令
 	switch os.Args[1] {//判断第二个命令
 	case "utxo":
