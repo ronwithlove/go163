@@ -532,11 +532,12 @@ func (blockchain *BlockChain) FindAllSpentOutputs() map[string][]*TxInput{
 	spentTXOutputs:=make(map[string][]*TxInput)
 	for{
 		block:=bcit.Next()
-		for _, tx:=range block.Txs{
+		for _, tx:=range block.Txs{//遍历所有交易
 			if !tx.IsCoinbaseTransaction(){
-				for _,txInput:=range tx.Vins{
+				for _,txInput:=range tx.Vins{//遍历一个交易中的每个input
 					txHash:=hex.EncodeToString(txInput.TxHash)
-					//在以spentTXOutputs[txHash]为键，把txInput追加到数组slice[]*TxInput里ß。
+					//在以spentTXOutputs[txHash]为键，把txInput追加到数组slice[]*TxInput里。
+					//一个txHash对应好几个input交易，这里spentTXOutputs[txHash]是key,value是[]*TxInput
 					spentTXOutputs[txHash]=append(spentTXOutputs[txHash],txInput)
 				}
 			}

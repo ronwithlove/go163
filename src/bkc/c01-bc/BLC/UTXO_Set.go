@@ -33,7 +33,7 @@ func (txOutputs *TXOutputs) Serilize()[]byte{
 
 //查找
 
-//重制
+//重制,把UTXO存到DB里
 func (utxoSet *UTXOSet)ResetUTXOSet()  {
 	//在第一次创建的时候就更新utxo table
 	utxoSet.Blockchain.DB.Update(func(tx *bolt.Tx) error {
@@ -55,10 +55,10 @@ func (utxoSet *UTXOSet)ResetUTXOSet()  {
 			txOutputMap:=utxoSet.Blockchain.FindUTXOMap();
 			for keyHash, outputs:=range txOutputMap{
 				//将所有UTXO存入
-				txHash, _:=hex.DecodeString(keyHash)
+				txHash, _:=hex.DecodeString(keyHash)//txHash序列化
 				fmt.Printf("txHash: %x\n",txHash)
 
-				//存入utxo talbe
+				//存入utxo talb,序列话之后，存入bucket
 				err:=bucket.Put(txHash,outputs.Serilize())
 				if nil!=err{
 					log.Printf("put the utxo into table failed! %v\n",err)
