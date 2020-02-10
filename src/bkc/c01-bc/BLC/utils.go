@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/binary"
 	"encoding/json"
+	"fmt"
 	"log"
 	"os"
 )
@@ -48,4 +49,14 @@ func StringToHash160(address string)[]byte{
 	pubKeyHash:=Base58Decode([]byte(address))
 	hash160:=pubKeyHash[:len(pubKeyHash)-addressCheckSumLen]
 	return hash160
+}
+
+//获取节点ID
+func GetEnvNodeId()string{
+	nodeID:=os.Getenv("NODE_ID")
+	if nodeID==""{
+		fmt.Println("NODE_ID is not set...")
+		os.Exit(1)
+	}
+	return nodeID
 }
