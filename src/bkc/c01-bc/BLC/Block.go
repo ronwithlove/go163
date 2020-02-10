@@ -82,5 +82,8 @@ func (block *Block) HashTransaction() []byte{
 	}
 	txHash:=sha256.Sum256(bytes.Join(txHashes,[]byte{}))
 	return txHash[:]
+	//将交易数据存入Merkle树中，然后生成Merkle更节点
+	mtree:=NewMerkleTree(txHashes)
+	return mtree.RootNode.Data
 }
 
