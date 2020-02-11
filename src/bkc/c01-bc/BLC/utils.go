@@ -59,6 +59,5 @@ func GetEnvNodeId()string{
 		fmt.Println("NODE_ID is not set...")
 		os.Exit(1)
 	}
-	fmt.Printf("NODE_ID:%s\n",nodeID)
 	return nodeID
 }

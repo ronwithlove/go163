@@ -75,4 +75,3 @@ func(w*Wallets) SaveWallets(nodeID string){
 	}
 }
 
-//11:14

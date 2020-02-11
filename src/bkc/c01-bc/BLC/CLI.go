@@ -42,7 +42,8 @@ func PrintUsage(){
 	fmt.Printf("\t\t\treset -- 重制UTXOtable\n")
 	fmt.Printf("\t\t\tbalance - 查找所有UTXO\n")
 	fmt.Printf("\tset_id -port PORT -- 设置节点号\n")
-	fmt.Printf("\t\tport -- 访问的节点号")
+	fmt.Printf("\t\tport -- 访问的节点号\n")
+	fmt.Printf("\tstart -- 启动节点服务\n")
 
 }
 
@@ -86,6 +87,8 @@ func (cli *CLI)Run(){
 	UTXOTestCmd:=flag.NewFlagSet("utxo",flag.ExitOnError)
 	//节点号设置命令
 	setNodeIdCmd:=flag.NewFlagSet("set_id",flag.ExitOnError)
+	//节点服务启动命令
+	startNodeCmd:=flag.NewFlagSet("set_id",flag.ExitOnError)
 	//数据参数处理
 	//1.添加区块
 	flagAddBlockArg:=addBlockCmd.String("data","sent 100 btc to user","添加区块数据")
@@ -104,6 +107,11 @@ func (cli *CLI)Run(){
 	flagPortArg:=setNodeIdCmd.String("port","","设置节点ID")
 	//判断命令
 	switch os.Args[1] {//判断第二个命令
+	case "start":
+		err:=startNodeCmd.Parse(os.Args[2:])
+		if err!=nil{
+			log.Printf("parse cmd start node server fialed! %v\n",err)
+		}
 	case "set_id":
 		err:=setNodeIdCmd.Parse(os.Args[2:])
 		if err!=nil{
@@ -155,6 +163,12 @@ func (cli *CLI)Run(){
 		os.Exit(1)
 
 	}
+
+	//节点启动服务
+	if startNodeCmd.Parsed(){
+		cli.startNode(nodeId)
+	}
+
 
 	//节点ID设置
 	if setNodeIdCmd.Parsed(){
