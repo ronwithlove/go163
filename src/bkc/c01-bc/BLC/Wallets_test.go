@@ -6,7 +6,7 @@ import (
 )
 
 func TestWallets_CreateWallet(t *testing.T) {
-	wallets:=NewWallets()//生成集合对象
-	wallets.CreateWallet()
+	wallets:=NewWallets("3001")//生成集合对象
+	wallets.CreateWallet("3001")
 	fmt.Printf("wallets:%v\n",wallets.Wallets)
 }

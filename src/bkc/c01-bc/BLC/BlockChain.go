@@ -14,7 +14,7 @@ import (
 )
 
 //相关数据库属性
-const dbName = "block.db"//数据库名
+const dbName = "block_%s.db"//数据库名
 const blockTableName = "blocks"//表名
 //区块链管理文件
 type BlockChain struct{//直接用切片也可以，但是结构体比较正式一点
@@ -25,7 +25,9 @@ type BlockChain struct{//直接用切片也可以，但是结构体比较正式�
 
 
 //判断数据库文件是否存在
-func dbExist() bool{
+func dbExist(nodeID string) bool{
+	//生成不同节点的数据库文件
+	dbName:=fmt.Sprintf(dbName,nodeID)
 	if _,err:= os.Stat(dbName);os.IsNotExist(err){
 		//数据库文件不存在
 		return false
@@ -34,8 +36,8 @@ func dbExist() bool{
 }
 
 //初始化区块链
-func CreateBlockCHainWithGenesisBlock(address string) *BlockChain{
-	if dbExist(){//如果数据库已经存在
+func CreateBlockCHainWithGenesisBlock(address,nodeID string) *BlockChain{
+	if dbExist(nodeID){//如果数据库已经存在
 		fmt.Println("创世区块已存在")
 		os.Exit(1)
 	}
@@ -43,6 +45,7 @@ func CreateBlockCHainWithGenesisBlock(address string) *BlockChain{
 	//保持最新区块的哈希值
 	var blockHash []byte
 	//1.创建或者打开一个数据库
+	dbName:=fmt.Sprintf(dbName,nodeID)
 	db, err := bolt.Open(dbName, 0600, nil)
 	if err != nil {
 		log.Panicf("create db [%s] failed %v\n",dbName,err)
@@ -168,8 +171,9 @@ func (bc *BlockChain) PrintChain(){
 }
 
 //获取一个blockchain对象
-func BlockchainObject() *BlockChain {
+func BlockchainObject(nodeID string) *BlockChain {
 	//获取DB
+	dbName:=fmt.Sprintf(dbName,nodeID)
 	db, err := bolt.Open(dbName, 0600, nil)
 	if err != nil {
 		log.Panicf("create db [%s] failed %v\n",dbName,err)
@@ -192,7 +196,7 @@ func BlockchainObject() *BlockChain {
 
 //实现挖矿功能
 //通过接收交易，生成区块
-func(blockchain *BlockChain) MineNewBlock(from, to , amount []string){
+func(blockchain *BlockChain) MineNewBlock(from, to , amount []string,nodeID string){
 	var block *Block
 	//搁置交易生成步骤
 	var txs []*Transaction
@@ -200,7 +204,7 @@ func(blockchain *BlockChain) MineNewBlock(from, to , amount []string){
 	for index,address:=range from{
 		value,_:=strconv.Atoi(amount[index])//转成int
 		//生成新的交易
-		tx:=NewSimpleTransaction(address,to[index],value,blockchain,txs)
+		tx:=NewSimpleTransaction(address,to[index],value,blockchain,txs,nodeID)
 		//最加到txs的交易列表中去
 		txs=append(txs,tx)
 		//给予交易的发起者（矿工）一定的奖励

@@ -54,9 +54,11 @@ func StringToHash160(address string)[]byte{
 //获取节点ID
 func GetEnvNodeId()string{
 	nodeID:=os.Getenv("NODE_ID")
+
 	if nodeID==""{
 		fmt.Println("NODE_ID is not set...")
 		os.Exit(1)
 	}
+	fmt.Printf("NODE_ID:%s\n",nodeID)
 	return nodeID
 }

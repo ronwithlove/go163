@@ -62,7 +62,7 @@ func (tx *Transaction) HashTransaction(){
 }
 
 //生成普通转账交易
-func NewSimpleTransaction(from string, to string, amount int,bc *BlockChain,txs []*Transaction) *Transaction{
+func NewSimpleTransaction(from string, to string, amount int,bc *BlockChain,txs []*Transaction,nodeID string) *Transaction{
 	var txInputs []*TxInput
 	var txOutupts []*TxOutput
 
@@ -70,7 +70,7 @@ func NewSimpleTransaction(from string, to string, amount int,bc *BlockChain,txs 
 	money,spendableUTXODic:=bc.FindSpendableUTXO(from,amount,txs)
 	fmt.Printf("money:%v\n",money)
 	//获取钱包集合对象
-	wallets:=NewWallets()
+	wallets:=NewWallets(nodeID)
 	//查找对应的钱包结构
 	wallet:=wallets.Wallets[from]
 

@@ -40,7 +40,7 @@ func PrintUsage(){
 	fmt.Printf("\tutxo -method METHOD -- 测试UTXO Table 功能中指定的方法\n")
 	fmt.Printf("\t\tMETHOD -- 方法名\n")
 	fmt.Printf("\t\t\treset -- 重制UTXOtable\n")
-	fmt.Printf("\t\t\tbalance - 查找所有UTXO")
+	fmt.Printf("\t\t\tbalance - 查找所有UTXO\n")
 	fmt.Printf("\tset_id -port PORT -- 设置节点号\n")
 	fmt.Printf("\t\tport -- 访问的节点号")
 
@@ -49,20 +49,22 @@ func PrintUsage(){
 
 //添加区块
 func (cli *CLI) addBlock(txs []*Transaction){
-	//判断数据库是否存在
-	if !dbExist(){
-		fmt.Println("数据库不存在")
-		os.Exit(1)
-	}
-	blockchain:=BlockchainObject()//获取到最新的blockchain的对象实例
-	blockchain.AddBlock(txs)//新加区块
-	//cli.BC.AddBlock([]byte(data))//删除，没有必要了
+	////判断数据库是否存在
+	//if !dbExist(){
+	//	fmt.Println("数据库不存在")
+	//	os.Exit(1)
+	//}
+	//blockchain:=BlockchainObject()//获取到最新的blockchain的对象实例
+	//blockchain.AddBlock(txs)//新加区块
+	////cli.BC.AddBlock([]byte(data))//删除，没有必要了
 }
 
 
 
 //命令行运行函数
 func (cli *CLI)Run(){
+	nodeId:=GetEnvNodeId()
+
 	//检测参数数量
 	IsValidArgs()
 	//新建相关命令
@@ -162,7 +164,6 @@ func (cli *CLI)Run(){
 		}
 		cli.SetNodeId(*flagPortArg)
 	}
-	nodeId:=GetEnvNodeId()
 
 
 	//utxo table 操作
@@ -171,7 +172,7 @@ func (cli *CLI)Run(){
 		case "balance":
 			cli.TestFindUTXOMap()
 		case"reset":
-			cli.TestResetUTXO()
+			cli.TestResetUTXO(nodeId)
 		default:
 
 
@@ -179,11 +180,11 @@ func (cli *CLI)Run(){
 	}
 	//获取地址列表
 	if getAccountsCmd.Parsed(){
-		cli.GetAccounts()
+		cli.GetAccounts(nodeId)
 	}
 	//创建钱包
 	if createWalletCmd.Parsed(){
-		cli.CreateWallets()
+		cli.CreateWallets(nodeId)
 	}
 	//查询余额
 	if getBalanceCmd.Parsed(){
@@ -191,7 +192,7 @@ func (cli *CLI)Run(){
 			fmt.Println("请输入查询地址")
 			os.Exit(1)
 		}
-		cli.getBalance(*flagGetBalanceArg)
+		cli.getBalance(*flagGetBalanceArg,nodeId)
 	}
 	//发起转账
 	if sendCmd.Parsed(){
@@ -214,7 +215,7 @@ func (cli *CLI)Run(){
 		fmt.Printf("\tFROM:[%s]\n",JSONToSlice(*flagSendFromArg))
 		fmt.Printf("\tTO:[%s]\n",JSONToSlice(*flagSendToArg))
 		fmt.Printf("\tAMOUNT:[%s]\n",JSONToSlice(*flagSendAmountArg))
-		cli.send(JSONToSlice(*flagSendFromArg),JSONToSlice(*flagSendToArg),JSONToSlice(*flagSendAmountArg))
+		cli.send(JSONToSlice(*flagSendFromArg),JSONToSlice(*flagSendToArg),JSONToSlice(*flagSendAmountArg),nodeId)
 	}
 	//添加区块命令
 	if addBlockCmd.Parsed(){
@@ -226,7 +227,7 @@ func (cli *CLI)Run(){
 	}
 	//输出区块链信息
 	if printChainCmd.Parsed(){
-		cli.printchain()
+		cli.printchain(nodeId)
 	}
 	//创建区块链命令
 	if createBLCWithGenesisBlockCmd.Parsed(){
@@ -234,6 +235,6 @@ func (cli *CLI)Run(){
 			PrintUsage()
 			os.Exit(1)
 		}
-		cli.createBlockchain(*flagCreateBlockchainArg)//
+		cli.createBlockchain(*flagCreateBlockchainArg,nodeId)//
 	}
 }
