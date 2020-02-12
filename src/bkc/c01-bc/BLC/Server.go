@@ -14,13 +14,6 @@ import (
 //3000作为引导节点（主节点）的地址
 var knownNodes =[]string{"localhost:3000"}
 
-//当前区块版本信息（决定区块是否需要同步）
-type Version struct{
-//	Version int 	//版本号
-	Height int		//当前节点区块高度
-	AddrFrom string //当前节点地址
-}
-
 //节点服务
 var nodeAddress string//全球变量
 
