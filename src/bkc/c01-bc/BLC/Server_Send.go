@@ -40,21 +40,41 @@ func sendVersion(toAddress string){
 }
 
 //从指定节点同步数据
-func sendGetBlocks(){
-
+func sendGetBlocks(toAddress string){
+	//1.生成数据
+	data:=gobEncode(GetBlocks{nodeAddress})
+	//2.组装请求
+	request:=append(commandToBytes(CMD_GETBLOCKS),data...)
+	//3.发送请求
+	sendMessage(toAddress,request)
 }
 
 //发送获取指定区块请求
-func sendGetData(){
-
+func sendGetData(toAddress string,hash []byte){
+	//1.生成数据
+	data:=gobEncode(GetData{nodeAddress,hash})
+	//2.组装请求
+	request:=append(commandToBytes(CMD_GETDATA),data...)
+	//3.发送请求
+	sendMessage(toAddress,request)
 }
 
 //向其他节点展示
-func sendInv(){
-
+func sendInv(toAddress string,hashes [][]byte){
+	//1.生成数据
+	data:=gobEncode(Inv{nodeAddress,hashes})
+	//2.组装请求
+	request:=append(commandToBytes(CMD_INV),data...)
+	//3.发送请求
+	sendMessage(toAddress,request)
 }
 
 //发送区块信息
-func sendBlock(){
-
+func sendBlock(toAddress string, block []byte){
+	//1.生成数据
+	data:=gobEncode(BlockData{nodeAddress,block})
+	//2.组装请求
+	request:=append(commandToBytes(CMD_BLOCK),data...)
+	//3.发送请求
+	sendMessage(toAddress,request)
 }
