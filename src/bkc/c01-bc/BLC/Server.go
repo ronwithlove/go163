@@ -1,9 +1,7 @@
 package BLC
 
 import (
-	"bytes"
 	"fmt"
-	"io"
 	"io/ioutil"
 	"log"
 	"net"
@@ -40,50 +38,35 @@ func startServer(nodeID string){
 		if nil!=err{
 			log.Panicf("accept connect failed! %v\n",err)
 		}
-		request,err:=ioutil.ReadAll(conn)//得到请求
-		if nil!=err{
-			log.Panicf("Receive Message failed! %v\n",err)
-		}
-
-		//3.处理请求
-		fmt.Printf("Receive a Message:%v\n",request)
-		handleConnection()
+		//处理请求
+		//单独启动一个goroutine 进行请求处处理
+		handleConnection(conn)
 	}
 }
+
 
 //请求处理函数
-func handleConnection(){
-
-}
-
-
-//发送请求
-func sendMessage(to string, msg []byte){
-	fmt.Println("向服务器发送请求...")
-	//1.连接上服务器
-	conn,err:=net.Dial(PROTOCOL,to)
+func handleConnection(conn net.Conn){
+	request,err:=ioutil.ReadAll(conn)//得到请求
 	if nil!=err{
-		log.Panicf("connect to server [%s] failed! %v\n",err)
+		log.Panicf("Receive a request failed! %v\n",err)
 	}
-	//要发送的数据
-	_, err=io.Copy(conn,bytes.NewReader(msg))
-	if nil!=err{
-		log.Panicf("add the data to conn failed! %v\n",err)
+	cmd:=bytesToCommand(request)//接收到的命令反序列话
+	fmt.Printf("Receive a Command: %s\n",cmd)//打出来看下
+	switch cmd{
+	case CMD_VERSION:
+		handleVersion()
+	case CMD_GETDATA:
+		handleGetData()
+	case CMD_GETBLOCKS:
+		handleGetBlocks()
+	case CMD_INV:
+		handleInv()
+	case CMD_BLOCK:
+		handleBlocks()
+	default:
+		fmt.Println("Unknow command")
 	}
 }
 
-//区块链版本验证
-func sendVersion(toAddress string){
-	//1.获取当前节点的区块高度
-	height:=1
-	//2.组装生成version
-	versionData:=Version{Height:height,AddrFrom:nodeAddress}
-	//3.数据系列化
-	data:=gobEncode(versionData)
-	//4.将命令与版本组装成完整的请求
-	request:=append(commandToBytes(VERSION),data...)
-	//4.发送请求
-	sendMessage(toAddress,request)
 
-
-}

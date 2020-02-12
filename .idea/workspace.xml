@@ -2,14 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="41dd9106-37c3-4b6a-98af-dcbaf8b5cb53" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/Server_Block.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/Server_GetBlocks.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/Server_GetData.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/Server_Inv.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/Server_Version.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/Server_Handle.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/Server_Send.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/Constant.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/Constant.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/Server.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/Server.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/utils.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/utils.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/文档/笔记.rtf" beforeDir="false" afterPath="$PROJECT_DIR$/文档/笔记.rtf" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
