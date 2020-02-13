@@ -33,6 +33,7 @@ func PrintUsage(){
 	fmt.Printf("\t\t-AMOUNT amount -- 转账金额\n")
 	//查询余额
 	fmt.Printf("\tgetbalance -address FROM -- 查询指定地址的余额\n")
+<<<<<<< HEAD
 	fmt.Printf("\t查询余额参数说明：\n")
 	fmt.Printf("\t-address -- 查询余额的地址\n")
 	fmt.Println("\tcreatewallet -- 创建钱包\n")
@@ -45,6 +46,28 @@ func PrintUsage(){
 	fmt.Printf("\t\tport -- 访问的节点号\n")
 	fmt.Printf("\tstart -- 启动节点服务\n")
 
+=======
+	fmt.Printf("\t查询余额参数说明\n")
+	fmt.Printf("\t\t-address -- 查询余额的地址\n")
+}
+
+//参数数量检测函数
+func IsValidArgs(){
+	if len(os.Args)<2{
+		PrintUsage()
+		//直接退出
+		os.Exit(1)
+	}
+}
+
+//查询余额
+func (cli *CLI) getBalance(from string){
+	//查找改地址UTXO
+	//这里是写需要执行的查询函数
+	//获取区块链对象
+	blockchain:=BlockchainObject()
+	blockchain.UnUTXOS(from)
+>>>>>>> Master
 }
 
 

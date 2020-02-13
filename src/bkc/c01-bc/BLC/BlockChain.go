@@ -254,6 +254,7 @@ func(blockchain *BlockChain) MineNewBlock(from, to , amount []string,nodeID stri
 	})
 }
 
+<<<<<<< HEAD
 //获取指定地址已花费输出,虽然叫已花费输出，就是区块交易中的Input,不是Output不要搞混
 func (blockchain *BlockChain) SpentOutpts(address string) map[string][]int {
 	//已花费输出缓存
@@ -613,4 +614,10 @@ func (blockchain *BlockChain) FindUTXOMap() map[string]*TXOutputs{
 //获取当前区块的区块高度
 func (bc *BlockChain) GetHeight() int64{
 	return bc.Iterator().Next().Heigth
+=======
+//查找指定地址的UTXO
+func(blockchain *BlockChain) UnUTXOS(address string) []*TxOutput{//整条链可能会有多个，所以要数组
+	fmt.Printf("exec the UnUTXOS function\n")
+	return nil
+>>>>>>> Master
 }

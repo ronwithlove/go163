@@ -14,6 +14,7 @@ type TxInput struct{
 
 
 //验证应用的地址是否匹配
+<<<<<<< HEAD
 //func (txIntput *TxInput) CheckPubkeyWithAddress(address string)bool{
 //	return address==txIntput.ScriptSig
 //}
@@ -23,3 +24,9 @@ func (in *TxInput) UnLockRipemd160Hash(ripedmd160Hash []byte)bool{
 	inputRipemd160Hash:=Ripemd160Hash(in.PublicKey)//获取input的ripemd160哈希值
 	return bytes.Compare(inputRipemd160Hash,ripedmd160Hash)==0//两者相等
 }
+=======
+func (txIntput *TxInput) CheckPubkeyWithAddress(address string)bool{
+	return address==txIntput.ScriptSig
+}
+
+>>>>>>> Master

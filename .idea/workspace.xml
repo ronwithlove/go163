@@ -2,7 +2,56 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="41dd9106-37c3-4b6a-98af-dcbaf8b5cb53" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/文档/48.查询余额外壳封装.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+<<<<<<< HEAD
+=======
+      <change beforePath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/BlockChain.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/BlockChain.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/CLI.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/CLI.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/Tx_Input.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/Tx_Input.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/Tx_Output.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/Tx_Output.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bkc/c01-bc/bc" beforeDir="false" afterPath="$PROJECT_DIR$/src/bkc/c01-bc/bc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/LICENSE" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/appveyor.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/appveyor.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/bolt_386.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/bolt_386.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/bolt_amd64.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/bolt_amd64.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/bolt_arm.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/bolt_arm.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/bolt_arm64.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/bolt_arm64.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/bolt_linux.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/bolt_linux.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/bolt_openbsd.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/bolt_openbsd.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/bolt_ppc.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/bolt_ppc.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/bolt_ppc64.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/bolt_ppc64.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/bolt_ppc64le.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/bolt_ppc64le.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/bolt_s390x.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/bolt_s390x.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/bolt_unix.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/bolt_unix.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/bolt_unix_solaris.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/bolt_unix_solaris.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/bolt_windows.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/bolt_windows.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/boltsync_unix.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/boltsync_unix.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/bucket.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/bucket.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/bucket_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/bucket_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/cmd/bolt/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/cmd/bolt/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/cmd/bolt/main_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/cmd/bolt/main_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/cursor.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/cursor.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/cursor_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/cursor_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/db.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/db.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/db_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/db_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/doc.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/doc.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/errors.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/errors.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/freelist.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/freelist.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/freelist_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/freelist_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/node.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/node.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/node_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/node_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/page.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/page.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/page_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/page_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/quick_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/quick_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/simulation_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/simulation_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/tx.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/tx.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/boltdb/bolt/tx_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/boltdb/bolt/tx_test.go" afterDir="false" />
+>>>>>>> Master
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
