@@ -3,10 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="41dd9106-37c3-4b6a-98af-dcbaf8b5cb53" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/BlockChain.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/BlockChain.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/Server.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/Server.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/Server_Handle.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/Server_Handle.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/Server_Send.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/bkc/c01-bc/BLC/Server_Send.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
