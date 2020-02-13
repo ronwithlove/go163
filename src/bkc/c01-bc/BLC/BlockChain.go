@@ -608,3 +608,9 @@ func (blockchain *BlockChain) FindUTXOMap() map[string]*TXOutputs{
 	return utxoMaps;
 
 }
+
+
+//获取当前区块的区块高度
+func (bc *BlockChain) GetHeight() int64{
+	return bc.Iterator().Next().Heigth
+}

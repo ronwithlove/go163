@@ -26,11 +26,11 @@ func sendMessage(to string, msg []byte){
 }
 
 //区块链版本验证
-func sendVersion(toAddress string){
+func sendVersion(toAddress string,bc *BlockChain){
 	//1.获取当前节点的区块高度
-	height:=1
+	height:=bc.GetHeight()
 	//2.组装生成version
-	versionData:=Version{Height:height,AddrFrom:nodeAddress}
+	versionData:=Version{int(height),nodeAddress}
 	//3.数据系列化
 	data:=gobEncode(versionData)
 	//4.将命令与版本组装成完整的请求

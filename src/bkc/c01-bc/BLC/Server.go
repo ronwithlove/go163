@@ -26,6 +26,8 @@ func startServer(nodeID string){
 		log.Panicf("listen address of %s failed! %v\n",nodeAddress,err)
 	}
 	defer listen.Close()//别忘记关闭
+	//获取blockchain对象
+	bc:=BlockchainObject(nodeAddress)
 	//两个节点，主节点负责保存数据，钱包节点负责发送请求，同步数据
 	if nodeAddress!=knownNodes[0]{//不是主节点的时候，发送请求，同步数据
 	//...
@@ -40,13 +42,12 @@ func startServer(nodeID string){
 		}
 		//处理请求
 		//单独启动一个goroutine 进行请求处处理
-		handleConnection(conn)
+		go handleConnection(conn,bc)
 	}
 }
 
-
 //请求处理函数
-func handleConnection(conn net.Conn){
+func handleConnection(conn net.Conn, bc *BlockChain){
 	request,err:=ioutil.ReadAll(conn)//得到请求
 	if nil!=err{
 		log.Panicf("Receive a request failed! %v\n",err)
@@ -55,15 +56,15 @@ func handleConnection(conn net.Conn){
 	fmt.Printf("Receive a Command: %s\n",cmd)//打出来看下
 	switch cmd{
 	case CMD_VERSION:
-		handleVersion()
+		handleVersion(request,bc)
 	case CMD_GETDATA:
-		handleGetData()
+		handleGetData(request,bc)
 	case CMD_GETBLOCKS:
-		handleGetBlocks()
+		handleGetBlocks(request,bc)
 	case CMD_INV:
-		handleInv()
+		handleInv(request,bc)
 	case CMD_BLOCK:
-		handleBlocks()
+		handleBlocks(request,bc)
 	default:
 		fmt.Println("Unknow command")
 	}
